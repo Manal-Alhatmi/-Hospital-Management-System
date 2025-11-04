@@ -1,7 +1,6 @@
 package Main;
 
 import Services.*;
-
 import java.util.Scanner;
 
 public class HospitalManagementApp {
@@ -222,7 +221,6 @@ public class HospitalManagementApp {
             }
         }
     }
-
 
     private static void medicalRecordMenu() {
         int choice = 0;
