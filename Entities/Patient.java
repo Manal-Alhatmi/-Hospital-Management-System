@@ -14,7 +14,6 @@ public class Patient extends Person {
     private List<MedicalRecord> medicalRecords;
     private List<Appointment> appointments;
 
-
     public Patient(String id, String firstName, String lastName, LocalDate dateOfBirth,
                    String gender, String phoneNumber, String email, String address,
                    String patientId, String bloodGroup, List<String> allergies,
@@ -25,11 +24,12 @@ public class Patient extends Person {
         this.bloodGroup = bloodGroup;
         this.allergies = (allergies != null) ? allergies : new ArrayList<>();
         this.emergencyContact = emergencyContact;
-        this.registrationDate = registrationDate;
+        this.registrationDate = (registrationDate != null) ? registrationDate : LocalDate.now();
         this.insuranceId = insuranceId;
         this.medicalRecords = (medicalRecords != null) ? medicalRecords : new ArrayList<>();
         this.appointments = (appointments != null) ? appointments : new ArrayList<>();
     }
+
 
     public Patient(String id, String firstName, String lastName, LocalDate dob,
                    String phoneNumber, String email, String address, String patientId) {
@@ -37,9 +37,18 @@ public class Patient extends Person {
                 patientId, null, null, null, LocalDate.now(), null, null, null);
     }
 
-    public Patient(String id, String firstName, String lastName, LocalDate dob, String gender, String phone, String email, String address, String patientId, String bloodGroup, String emergencyContact, String insuranceId) {
+    public Patient(String id, String firstName, String lastName, LocalDate dob,
+                   String gender, String phone, String email, String address,
+                   String patientId, String bloodGroup, String emergencyContact, String insuranceId) {
+        this(id, firstName, lastName, dob, gender, phone, email, address,
+                patientId, bloodGroup, new ArrayList<>(), emergencyContact,
+                LocalDate.now(), insuranceId, new ArrayList<>(), new ArrayList<>());
     }
 
+    public Patient(String patientId, String firstName, String lastName) {
+        this(patientId, firstName, lastName, LocalDate.now(), null, null, null, null,
+                patientId, null, null, null);
+    }
 
     public String getPatientId() {
         return patientId;
@@ -110,7 +119,7 @@ public class Patient extends Person {
     @Override
     public void displayInfo() {
         super.displayInfo();
-        System.out.println("PatientID: " + patientId);
+        System.out.println("Patient ID: " + patientId);
         System.out.println("Blood Group: " + bloodGroup);
         System.out.println("Emergency Contact: " + emergencyContact);
         System.out.println("Registration Date: " + registrationDate);
@@ -122,6 +131,6 @@ public class Patient extends Person {
 
     @Override
     public String toString() {
-        return getFirstName() + " " + getLastName() + " (Patient: " + patientId + ")";
+        return getFirstName() + " " + getLastName() + " (Patient ID: " + patientId + ")";
     }
 }

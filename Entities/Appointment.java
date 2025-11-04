@@ -1,6 +1,7 @@
 package Entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Appointment {
     private String appointmentId;
@@ -81,6 +82,7 @@ public class Appointment {
         this.notes = notes;
     }
 
+
     public void reschedule(LocalDate newDate, String newTime) {
         this.appointmentDate = newDate;
         this.appointmentTime = newTime;
@@ -105,4 +107,24 @@ public class Appointment {
         System.out.println("Notes: " + notes);
     }
 
+
+
+    public void addNotes(String notes) {
+        this.notes = (this.notes == null ? "" : this.notes + "\n") + notes;
+        System.out.println("Notes added: " + notes);
+    }
+
+
+    public void addNotes(String notes, String addedBy) {
+        String entry = "[" + addedBy + "]: " + notes;
+        this.notes = (this.notes == null ? "" : this.notes + "\n") + entry;
+        System.out.println("Notes added by " + addedBy);
+    }
+
+
+    public void addNotes(String notes, String addedBy, LocalDateTime timestamp) {
+        String entry = "[" + timestamp + " - " + addedBy + "]: " + notes;
+        this.notes = (this.notes == null ? "" : this.notes + "\n") + entry;
+        System.out.println("Notes added by " + addedBy + " at " + timestamp);
+    }
 }

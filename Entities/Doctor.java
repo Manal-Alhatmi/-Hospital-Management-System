@@ -14,7 +14,7 @@ public class Doctor extends Person {
     private List<String> availableSlots;
     private List<String> assignedPatients;
 
-    public Doctor(String id, String firstName, String lastName, java.time.LocalDate dob,
+    public Doctor(String id, String firstName, String lastName, LocalDate dob,
                   String gender, String phoneNumber, String email, String address,
                   String doctorId, String specialization, String qualification,
                   int experienceYears, String departmentId, double consultationFee,
@@ -29,16 +29,32 @@ public class Doctor extends Person {
         this.availableSlots = (availableSlots != null) ? availableSlots : new ArrayList<>();
         this.assignedPatients = (assignedPatients != null) ? assignedPatients : new ArrayList<>();
     }
-    public Doctor(String id, String firstName, String lastName, String doctorId, String specialization, String qualification, int experienceYears, String departmentId, double consultationFee) {
-        this(id, firstName, lastName, null, null, null, null, null, doctorId, specialization, qualification, experienceYears, departmentId, consultationFee, null, null);
+
+    public Doctor(String id, String firstName, String lastName, String doctorId,
+                  String specialization, String qualification, int experienceYears,
+                  String departmentId, double consultationFee) {
+        this(id, firstName, lastName, null, null, null, null, null,
+                doctorId, specialization, qualification, experienceYears,
+                departmentId, consultationFee, null, null);
     }
 
-    public Doctor(String id, String firstName, String lastName, LocalDate dob, String gender, String phone, String email, String address, String doctorId, String specialization, String qualification, int experienceYears, String departmentId, double consultationFee) {
+    public Doctor(String id, String firstName, String lastName, LocalDate dob,
+                  String gender, String phone, String email, String address,
+                  String doctorId, String specialization, String qualification,
+                  int experienceYears, String departmentId, double consultationFee) {
+        this(id, firstName, lastName, dob, gender, phone, email, address,
+                doctorId, specialization, qualification, experienceYears,
+                departmentId, consultationFee, new ArrayList<>(), new ArrayList<>());
+    }
+
+    public Doctor(String doctorId, String firstName, String specialization) {
+        this(null, firstName, null, null, null, null, null, null,
+                doctorId, specialization, null, 0, null, 0.0,
+                new ArrayList<>(), new ArrayList<>());
     }
 
     public <E> Doctor(String idDoctor, String firstName, String lastName, String idDoctor1, String specialization, String qualification, int experience, Object o, double fee, ArrayList<E> es, ArrayList<E> es1) {
     }
-
 
     public String getDoctorId() {
         return doctorId;
@@ -86,8 +102,7 @@ public class Doctor extends Person {
         return availableSlots;
     }
     public List<String> getAssignedPatients() {
-        return assignedPatients;
-    }
+        return assignedPatients; }
 
     public void assignPatient(String patientId) {
         if (patientId != null && !assignedPatients.contains(patientId))
@@ -103,17 +118,18 @@ public class Doctor extends Person {
     }
 
     public void addAvailableSlot(String slot) {
-        if (slot != null && !availableSlots.contains(slot)) availableSlots.add(slot);
+        if (slot != null && !availableSlots.contains(slot))
+            availableSlots.add(slot);
     }
 
     @Override
     public void displayInfo() {
         super.displayInfo();
-        System.out.println("DoctorID: " + doctorId);
+        System.out.println("Doctor ID: " + doctorId);
         System.out.println("Specialization: " + specialization);
         System.out.println("Qualification: " + qualification);
         System.out.println("Experience (years): " + experienceYears);
-        System.out.println("DepartmentID: " + departmentId);
+        System.out.println("Department ID: " + departmentId);
         System.out.println("Consultation Fee: " + consultationFee);
         System.out.println("Available Slots: " + availableSlots);
         System.out.println("Assigned Patients: " + assignedPatients);
@@ -121,6 +137,7 @@ public class Doctor extends Person {
 
     @Override
     public String toString() {
-        return getFirstName() + " " + getLastName() + " (Dr. " + doctorId + ", " + specialization + ")";
+        return "Dr. " + getFirstName() + " " + getLastName() +
+                " (" + specialization + ", ID: " + doctorId + ")";
     }
 }
