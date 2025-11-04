@@ -13,6 +13,7 @@ public class DoctorService implements Manageable {
     static ArrayList<Doctor> doctorList = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
+
     public static Doctor addInput() {
         String idDoctor = InputHandler.getStringInput("Enter Doctor ID: ");
         String firstName = InputHandler.getStringInput("Enter First Name: ");
@@ -23,10 +24,8 @@ public class DoctorService implements Manageable {
         double fee = InputHandler.getDoubleInput("Enter Consultation Fee: ");
         String phone = InputHandler.getStringInput("Enter Phone Number: ");
 
-        return new Doctor(idDoctor, firstName, lastName, idDoctor, specialization, qualification, experience, null, fee, new ArrayList<>(), new ArrayList<>()
-        );
+        return new Doctor(idDoctor, firstName, lastName, idDoctor, specialization, qualification, experience, null, fee, new ArrayList<>(), new ArrayList<>());
     }
-
 
     public static void save(Doctor doctor) {
         if (doctor != null) {
@@ -40,6 +39,61 @@ public class DoctorService implements Manageable {
     public static void addDoctor() {
         Doctor newDoctor = addInput();
         save(newDoctor);
+    }
+
+
+    public static void addDoctor(String firstName, String lastName, String specialization) {
+        Doctor doctor = new Doctor("DOC" + (doctorList.size() + 1),
+                firstName, lastName, "DOC" + (doctorList.size() + 1),
+                specialization, "N/A", 0, null, 0.0, new ArrayList<>(), new ArrayList<>());
+        save(doctor);
+        System.out.println("Doctor added (basic details only).");
+    }
+
+
+    public static void addDoctor(Doctor doctor) {
+        save(doctor);
+        System.out.println("Doctor added from object.");
+    }
+
+
+    public static void searchDoctor(String specialization) {
+        boolean found = false;
+        for (Doctor d : doctorList) {
+            if (d.getSpecialization() != null && d.getSpecialization().equalsIgnoreCase(specialization)) {
+                d.displayInfo();
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No doctor found with specialization: " + specialization);
+        }
+    }
+
+    public static void searchDoctor(String name, String specialization) {
+        boolean found = false;
+        for (Doctor d : doctorList) {
+            boolean matchesName = (d.getFirstName() + " " + d.getLastName()).toLowerCase().contains(name.toLowerCase());
+            boolean matchesSpec = d.getSpecialization() != null && d.getSpecialization().equalsIgnoreCase(specialization);
+
+            if (matchesName && matchesSpec) {
+                d.displayInfo();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No doctor found with name '" + name + "' and specialization '" + specialization + "'.");
+        }
+    }
+
+
+    public static void removeDoctor(Doctor doctor) {
+        if (doctorList.remove(doctor)) {
+            System.out.println("Doctor " + doctor.getDoctorId() + " removed successfully (by object).");
+        } else {
+            System.out.println("Doctor not found in the list.");
+        }
     }
 
 
@@ -66,7 +120,6 @@ public class DoctorService implements Manageable {
         System.out.println("Doctor updated successfully.");
     }
 
-
     public static void removeDoctor() {
         String id = InputHandler.getStringInput("Enter Doctor ID to remove: ");
         boolean found = false;
@@ -86,7 +139,6 @@ public class DoctorService implements Manageable {
         }
     }
 
-
     public static void displayAllDoctors() {
         if (doctorList.isEmpty()) {
             System.out.println("No doctors found.");
@@ -97,7 +149,6 @@ public class DoctorService implements Manageable {
         }
     }
 
-
     public static Doctor getDoctorById(String id) {
         for (Doctor d : doctorList) {
             if (d.getDoctorId().equalsIgnoreCase(id)) {
@@ -107,26 +158,13 @@ public class DoctorService implements Manageable {
         return null;
     }
 
-
     public static void searchDoctorBySpecialization() {
         String spec = InputHandler.getStringInput("Enter specialization to search: ");
-        boolean found = false;
-
-        for (Doctor d : doctorList) {
-            if (d.getSpecialization() != null && d.getSpecialization().equalsIgnoreCase(spec)) {
-                d.displayInfo();
-                found = true;
-            }
-        }
-
-        if (!found) {
-            System.out.println("No doctors found with that specialization.");
-        }
+        searchDoctor(spec);
     }
 
-
     public static void viewAvailableDoctors() {
-        System.out.println(" Available Doctors");
+        System.out.println("Available Doctors:");
         boolean found = false;
 
         for (Doctor d : doctorList) {
@@ -140,7 +178,6 @@ public class DoctorService implements Manageable {
             System.out.println("No doctors currently available.");
         }
     }
-
 
     public static void assignPatientToDoctor() {
         if (doctorList.isEmpty()) {
@@ -156,7 +193,7 @@ public class DoctorService implements Manageable {
         }
 
         while (true) {
-            String patientId = InputHandler.getStringInput("Enter Patient ID to assign or  'q' : ");
+            String patientId = InputHandler.getStringInput("Enter Patient ID to assign or 'q' to quit: ");
             if (patientId.equalsIgnoreCase("q")) {
                 break;
             }
@@ -170,19 +207,27 @@ public class DoctorService implements Manageable {
         }
     }
 
+
     @Override
     public void add(Object entity) {
-
+        if (entity instanceof Doctor doctor) {
+            save(doctor);
+        }
     }
 
     @Override
     public void remove(String id) {
-
+        Doctor doctor = getDoctorById(id);
+        if (doctor != null) {
+            doctorList.remove(doctor);
+            System.out.println("Doctor removed (from Manageable interface).");
+        } else {
+            System.out.println("Doctor not found.");
+        }
     }
 
     @Override
     public List<Doctor> getAll() {
         return doctorList;
-
     }
 }

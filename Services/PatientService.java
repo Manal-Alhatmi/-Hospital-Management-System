@@ -12,7 +12,6 @@ import java.util.List;
 public class PatientService {
     private static final List<Patient> patientList = new ArrayList<>();
 
-
     public static void addPatient() {
         System.out.println("\nRegister New Patient");
 
@@ -29,20 +28,117 @@ public class PatientService {
         String patientId = HelperUtils.generateId("PAT");
 
         Patient newPatient = new Patient(
-                HelperUtils.generateId("PER"),firstName, lastName, dob, gender, phone, email, address, patientId, bloodGroup, new ArrayList<>(), emergencyContact,
+                HelperUtils.generateId("PER"),
+                firstName, lastName, dob, gender, phone, email, address,
+                patientId, bloodGroup, new ArrayList<>(), emergencyContact,
                 LocalDate.now(), insuranceId, new ArrayList<>(), new ArrayList<>()
         );
 
         save(newPatient);
     }
 
-
     public static void save(Patient patient) {
         if (HelperUtils.isNotNull(patient)) {
             patientList.add(patient);
             System.out.println("Patient saved successfully with ID: " + patient.getPatientId());
         } else {
-            System.out.println(" Invalid patient data");
+            System.out.println("Invalid patient data");
+        }
+    }
+
+    public static void addPatient(String firstName, String lastName, String phone) {
+        String patientId = HelperUtils.generateId("PAT");
+        Patient newPatient = new Patient(
+                HelperUtils.generateId("PER"),
+                firstName, lastName, LocalDate.now(), "N/A", phone,
+                "N/A", "N/A", patientId, "N/A",
+                new ArrayList<>(), "N/A", LocalDate.now(), "N/A",
+                new ArrayList<>(), new ArrayList<>()
+        );
+        patientList.add(newPatient);
+        System.out.println("Patient added with minimal info (ID: " + patientId + ")");
+    }
+
+    public static void addPatient(String firstName, String lastName, String phone, String bloodGroup, String email) {
+        String patientId = HelperUtils.generateId("PAT");
+        Patient newPatient = new Patient(
+                HelperUtils.generateId("PER"),
+                firstName, lastName, LocalDate.now(), "N/A", phone, email,
+                "N/A", patientId, bloodGroup, new ArrayList<>(), "N/A",
+                LocalDate.now(), "N/A", new ArrayList<>(), new ArrayList<>()
+        );
+        patientList.add(newPatient);
+        System.out.println("Patient added with blood group and email (ID: " + patientId + ")");
+    }
+
+    public static void addPatient(Patient patient) {
+        if (HelperUtils.isNotNull(patient)) {
+            patientList.add(patient);
+            System.out.println("Full patient object added successfully (ID: " + patient.getPatientId() + ")");
+        } else {
+            System.out.println("Invalid patient object.");
+        }
+    }
+
+    public static void searchPatients(String keyword) {
+        boolean found = false;
+        String lowerKeyword = keyword.toLowerCase();
+        for (Patient p : patientList) {
+            if ((p.getFirstName() != null && p.getFirstName().toLowerCase().contains(lowerKeyword))
+                    || (p.getLastName() != null && p.getLastName().toLowerCase().contains(lowerKeyword))
+                    || (p.getPhoneNumber() != null && p.getPhoneNumber().toLowerCase().contains(lowerKeyword))
+                    || (p.getEmail() != null && p.getEmail().toLowerCase().contains(lowerKeyword))
+                    || (p.getBloodGroup() != null && p.getBloodGroup().toLowerCase().contains(lowerKeyword))) {
+                p.displayInfo();
+                found = true;
+            }
+        }
+        if (!found) System.out.println("No patients found matching keyword: " + keyword);
+    }
+
+    public static void searchPatients(String firstName, String lastName) {
+        boolean found = false;
+        for (Patient p : patientList) {
+            if (p.getFirstName().equalsIgnoreCase(firstName) && p.getLastName().equalsIgnoreCase(lastName)) {
+                p.displayInfo();
+                found = true;
+            }
+        }
+        if (!found)
+            System.out.println("No patients found with name: " + firstName + " " + lastName);
+    }
+
+    public static void displayPatients() {
+        if (patientList.isEmpty()) {
+            System.out.println("No patients available to display.");
+            return;
+        }
+        System.out.println("\n--- All Registered Patients ---");
+        for (Patient p : patientList) {
+            p.displayInfo();
+        }
+    }
+
+    public static void displayPatients(String filter) {
+        boolean found = false;
+        for (Patient p : patientList) {
+            if ((p.getBloodGroup() != null && p.getBloodGroup().equalsIgnoreCase(filter))
+                    || (p.getGender() != null && p.getGender().equalsIgnoreCase(filter))) {
+                p.displayInfo();
+                found = true;
+            }
+        }
+        if (!found) System.out.println("No patients found matching filter: " + filter);
+    }
+
+    public static void displayPatients(int limit) {
+        System.out.println("\n--- Displaying First " + limit + " Patients ---");
+        if (patientList.isEmpty()) {
+            System.out.println("No patients found.");
+            return;
+        }
+        for (int i = 0; i < Math.min(limit, patientList.size()); i++) {
+            patientList.get(i).displayInfo();
         }
     }
 
@@ -77,7 +173,6 @@ public class PatientService {
         System.out.println("Patient updated successfully.");
     }
 
-
     public static void removePatient() {
         System.out.println("\nRemove Patient");
         String id = InputHandler.getStringInput("Enter Patient ID to remove: ");
@@ -87,13 +182,12 @@ public class PatientService {
             patientList.remove(patient);
             System.out.println("Patient removed successfully.");
         } else {
-            System.out.println(" Patient not found.");
+            System.out.println("Patient not found.");
         }
     }
 
-
     public static void displayAllPatients() {
-        System.out.println("\n--- All Registered Patients ---");
+        System.out.println("\nAll Registered Patients");
         if (patientList.isEmpty()) {
             System.out.println("No patients found.");
             return;
@@ -103,7 +197,6 @@ public class PatientService {
         }
     }
 
-
     public static Patient getPatientById(String id) {
         for (Patient p : patientList) {
             if (p.getPatientId().equalsIgnoreCase(id)) {
@@ -112,7 +205,6 @@ public class PatientService {
         }
         return null;
     }
-
 
     public static void searchPatientsByName() {
         System.out.println("\nSearch Patient");
@@ -131,9 +223,8 @@ public class PatientService {
         }
     }
 
-
     public static void viewPatientMedicalHistory() {
-        System.out.println("\n--- View Patient Medical History ---");
+        System.out.println("\nView Patient Medical History");
         String patientId = InputHandler.getStringInput("Enter Patient ID: ");
         Patient patient = getPatientById(patientId);
 
@@ -152,15 +243,15 @@ public class PatientService {
         }
 
         if (!found) {
-            System.out.println(" No medical records found for this patient.");
+            System.out.println("No medical records found for this patient.");
         }
     }
 
-
-    public static boolean checkIfPatientIdExit(String id){
+    public static boolean checkIfPatientIdExit(String id) {
         for (Patient p : patientList) {
             if (p.getPatientId().equalsIgnoreCase(id))
                 return true;
-        } return false;
+        }
+        return false;
     }
 }
