@@ -29,12 +29,16 @@ public class DoctorService implements Manageable {
 
     public static void save(Doctor doctor) {
         if (doctor != null) {
+            if (doctor.getDoctorId() == null || doctor.getDoctorId().isEmpty()) {
+                doctor.setDoctorId("DOC" + (doctorList.size() + 1));
+            }
             doctorList.add(doctor);
             System.out.println("Doctor saved successfully with ID: " + doctor.getDoctorId());
         } else {
             System.out.println("Invalid doctor data, not saved.");
         }
     }
+
 
     public static void addDoctor() {
         Doctor newDoctor = addInput();

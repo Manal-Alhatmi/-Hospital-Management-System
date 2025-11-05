@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientService {
-    private static final List<Patient> patientList = new ArrayList<>();
+    static final List<Patient> patientList = new ArrayList<>();
 
     public static void addPatient() {
         System.out.println("\nRegister New Patient");
@@ -38,13 +38,19 @@ public class PatientService {
     }
 
     public static void save(Patient patient) {
-        if (HelperUtils.isNotNull(patient)) {
-            patientList.add(patient);
-            System.out.println("Patient saved successfully with ID: " + patient.getPatientId());
-        } else {
-            System.out.println("Invalid patient data");
+        if (patient == null) {
+            System.out.println("Invalid patient data. Patient not saved.");
+            return;
         }
+        if (patient.getPatientId() == null || patient.getPatientId().isEmpty()) {
+            patient.setPatientId(HelperUtils.generateId("PAT"));
+        }
+
+        patientList.add(patient);
+        System.out.println("Patient saved successfully with ID: " + patient.getPatientId());
     }
+
+
 
     public static void addPatient(String firstName, String lastName, String phone) {
         String patientId = HelperUtils.generateId("PAT");
