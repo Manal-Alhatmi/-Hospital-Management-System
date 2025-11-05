@@ -50,6 +50,9 @@ public class Patient extends Person {
                 patientId, null, null, null);
     }
 
+    public Patient(String p001, String salim, String alHabsi, LocalDate of, String male, String number, String mail, String muscat, String regular) {
+    }
+
     public String getPatientId() {
         return patientId;
     }

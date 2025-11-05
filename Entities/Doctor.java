@@ -53,7 +53,11 @@ public class Doctor extends Person {
                 new ArrayList<>(), new ArrayList<>());
     }
 
-    public <E> Doctor(String idDoctor, String firstName, String lastName, String idDoctor1, String specialization, String qualification, int experience, Object o, double fee, ArrayList<E> es, ArrayList<E> es1) {
+    public Doctor() {
+
+    }
+
+    public <E> Doctor(String doc2, String fatima, String ali, String doc21, String consultant, String phD, int i, String neurology, double v, ArrayList<E> es, ArrayList<E> es1) {
     }
 
     public String getDoctorId() {
