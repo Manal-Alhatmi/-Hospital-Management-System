@@ -10,7 +10,7 @@ public class HospitalManagementApp {
         int mainChoice = 0;
 
         while (mainChoice != 8) {
-            System.out.println("\n Hospital Management System");
+            System.out.println("\n Welcome to the Hospital Management System!");
             System.out.println("1. Patient Management");
             System.out.println("2. Doctor Management");
             System.out.println("3. Nurse Management");
