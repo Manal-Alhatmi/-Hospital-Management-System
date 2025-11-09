@@ -5,6 +5,7 @@ import Utils.InputHandler;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Person {
     private String id;
@@ -42,22 +43,33 @@ public class Person {
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
-        if (HelperUtils.isValidString(firstName, 2))
-            this.firstName = HelperUtils.capitalize(firstName);
-        else
-            this.firstName = "Unknown";
+        Scanner scanner = new Scanner(System.in);
+        while (!HelperUtils.isValidString(firstName, 2)) {
+            System.out.println("Failed first name entry. Please enter a valid first name (at least 2 characters):");
+            firstName = scanner.nextLine();
+        }
+
+        this.firstName = HelperUtils.capitalize(firstName);
     }
+
 
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
-        if (HelperUtils.isValidString(lastName, 2))
-            this.lastName = HelperUtils.capitalize(lastName);
-        else
-            this.lastName = "Unknown";
+        Scanner scanner = new Scanner(System.in);
+
+        while (!HelperUtils.isValidString(lastName, 2)) {
+            System.out.println("Failed last name entry. Please enter a valid last name (at least 2 characters):");
+            lastName = scanner.nextLine();
+        }
+
+        this.lastName = HelperUtils.capitalize(lastName);
     }
+
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
@@ -80,7 +92,7 @@ public class Person {
     }
     public void setGender(String gender) {
         while (HelperUtils.isNull(gender) || !(gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("F"))) {
-            gender = InputHandler.getStringInput("Invalid gender. Please enter 'Male' or 'Female': ");
+            gender = InputHandler.getStringInput("Invalid gender. Please enter 'M' or 'F': ");
         }
         this.gender = gender;
     }
@@ -89,32 +101,47 @@ public class Person {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public void setPhoneNumber(String phoneNumber) {
-        if (HelperUtils.isValidString(phoneNumber, 8, 15))
-            this.phoneNumber = phoneNumber;
-        else
-            this.phoneNumber = "N/A";
+        Scanner scanner = new Scanner(System.in);
+
+        while (!HelperUtils.isValidString(phoneNumber, 8, 15) || !phoneNumber.matches("\\d{8,15}")) {
+            System.out.println("Failed phone number entry. Please enter a valid phone number (8-15 digits):");
+            phoneNumber = scanner.nextLine();
+        }
+
+        this.phoneNumber = phoneNumber;
     }
+
 
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
-        if (HelperUtils.isValidString(email) && email.contains("@"))
-            this.email = email;
-        else
-            this.email = "N/A";
+        Scanner scanner = new Scanner(System.in);
+        while (!HelperUtils.isValidString(email) || !email.contains("@")) {
+            System.out.println("Failed email entry. Please enter a valid email:");
+            email = scanner.nextLine();
+        }
+        this.email = email;
     }
+
 
     public String getAddress() {
         return address;
     }
     public void setAddress(String address) {
-        if (HelperUtils.isValidString(address, 3))
-            this.address = address;
-        else
-            this.address = "N/A";
+        Scanner scanner = new Scanner(System.in);
+
+        while (!HelperUtils.isValidString(address, 3)) {
+            System.out.println("Failed address entry. Please enter a valid address (at least 3 characters):");
+            address = scanner.nextLine();
+        }
+
+        this.address = address;
     }
+
 
     public void displayInfo() {
         System.out.println("ID: " + id);

@@ -6,6 +6,7 @@ import Utils.InputHandler;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Patient extends Person {
@@ -105,14 +106,17 @@ public class Patient extends Person {
     public String getEmergencyContact() {
         return emergencyContact;
     }
-
     public void setEmergencyContact(String emergencyContact) {
-        if (HelperUtils.isValidString(emergencyContact, 8, 15)) {
-            this.emergencyContact = emergencyContact.trim();
-        } else {
-            this.emergencyContact = "N/A";
+        Scanner scanner = new Scanner(System.in);
+
+        while (!HelperUtils.isValidString(emergencyContact, 8, 15) || !emergencyContact.matches("\\d{8,15}")) {
+            System.out.println("Failed emergency contact entry. Please enter a valid number (8-15 digits):");
+            emergencyContact = scanner.nextLine();
         }
+
+        this.emergencyContact = emergencyContact.trim();
     }
+
 
     public LocalDate getRegistrationDate() {
         return registrationDate;
