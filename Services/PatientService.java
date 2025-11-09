@@ -14,26 +14,18 @@ public class PatientService {
 
     public static void addPatient() {
         System.out.println("\nRegister New Patient");
-
-        String firstName = InputHandler.getStringInput("Enter First Name: ");
-        String lastName = InputHandler.getStringInput("Enter Last Name: ");
-        LocalDate dob = InputHandler.getDateInput("Enter Date of Birth : ");
-        String gender = InputHandler.getStringInput("Enter Gender (M/F): ");
-        String phone = InputHandler.getStringInput("Enter Phone Number: ");
-        String email = InputHandler.getStringInput("Enter Email: ");
-        String address = InputHandler.getStringInput("Enter Address: ");
-        String bloodGroup = InputHandler.getStringInput("Enter Blood Group: ");
-        String emergencyContact = InputHandler.getStringInput("Enter Emergency Contact: ");
-        String insuranceId = InputHandler.getStringInput("Enter Insurance ID (or N/A): ");
-        String patientId = HelperUtils.generateId("PAT");
-
-        Patient newPatient = new Patient(
-                HelperUtils.generateId("PER"),
-                firstName, lastName, dob, gender, phone, email, address,
-                patientId, bloodGroup, new ArrayList<>(), emergencyContact,
-                LocalDate.now(), insuranceId, new ArrayList<>(), new ArrayList<>()
-        );
-
+        Patient newPatient = new Patient();
+        newPatient.setFirstName(InputHandler.getStringInput("Enter First Name: "));
+        newPatient.setLastName(InputHandler.getStringInput("Enter Last Name: "));
+        newPatient.setDateOfBirth(InputHandler.getDateInput("Enter Date of Birth : "));
+        newPatient.setGender(InputHandler.getStringInput("Enter Gender (M/F): "));
+        newPatient.setPhoneNumber(InputHandler.getStringInput("Enter Phone Number: "));
+        newPatient.setEmail(InputHandler.getStringInput("Enter Email: "));
+        newPatient.setAddress( InputHandler.getStringInput("Enter Address: "));
+        newPatient.setBloodGroup(InputHandler.getStringInput("Enter Blood Group: "));
+        newPatient.setEmergencyContact(InputHandler.getStringInput("Enter Emergency Contact: "));
+        newPatient.setInsuranceId(InputHandler.getStringInput("Enter Insurance ID (or N/A): "));
+        newPatient.setPatientId(HelperUtils.generateId("PAT"));
         save(newPatient);
     }
 
@@ -119,7 +111,7 @@ public class PatientService {
             System.out.println("No patients available to display.");
             return;
         }
-        System.out.println("\n--- All Registered Patients ---");
+        System.out.println("\n All Registered Patients");
         for (Patient p : patientList) {
             p.displayInfo();
         }
@@ -138,7 +130,7 @@ public class PatientService {
     }
 
     public static void displayPatients(int limit) {
-        System.out.println("\n--- Displaying First " + limit + " Patients ---");
+        System.out.println("\n Displaying First " + limit + " Patients");
         if (patientList.isEmpty()) {
             System.out.println("No patients found.");
             return;
