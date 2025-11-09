@@ -1,5 +1,7 @@
 package Entities;
 
+import Utils.HelperUtils;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +21,18 @@ public class Doctor extends Person {
                   String doctorId, String specialization, String qualification,
                   int experienceYears, String departmentId, double consultationFee,
                   List<String> availableSlots, List<String> assignedPatients) {
+
         super(id, firstName, lastName, dob, gender, phoneNumber, email, address);
-        this.doctorId = doctorId;
-        this.specialization = specialization;
-        this.qualification = qualification;
-        this.experienceYears = experienceYears;
-        this.departmentId = departmentId;
-        this.consultationFee = consultationFee;
-        this.availableSlots = (availableSlots != null) ? availableSlots : new ArrayList<>();
-        this.assignedPatients = (assignedPatients != null) ? assignedPatients : new ArrayList<>();
+        this.doctorId = HelperUtils.isValidString(doctorId) ? doctorId : HelperUtils.generateId("DOC");
+
+        setSpecialization(specialization);
+        setQualification(qualification);
+        setExperienceYears(experienceYears);
+        setDepartmentId(departmentId);
+        setConsultationFee(consultationFee);
+
+        this.availableSlots = HelperUtils.isNotNull(availableSlots) ? availableSlots : new ArrayList<>();
+        this.assignedPatients = HelperUtils.isNotNull(assignedPatients) ? assignedPatients : new ArrayList<>();
     }
 
     public Doctor(String id, String firstName, String lastName, String doctorId,
@@ -38,15 +43,6 @@ public class Doctor extends Person {
                 departmentId, consultationFee, null, null);
     }
 
-    public Doctor(String id, String firstName, String lastName, LocalDate dob,
-                  String gender, String phone, String email, String address,
-                  String doctorId, String specialization, String qualification,
-                  int experienceYears, String departmentId, double consultationFee) {
-        this(id, firstName, lastName, dob, gender, phone, email, address,
-                doctorId, specialization, qualification, experienceYears,
-                departmentId, consultationFee, new ArrayList<>(), new ArrayList<>());
-    }
-
     public Doctor(String doctorId, String firstName, String specialization) {
         this(null, firstName, null, null, null, null, null, null,
                 doctorId, specialization, null, 0, null, 0.0,
@@ -54,76 +50,99 @@ public class Doctor extends Person {
     }
 
     public Doctor() {
-
+        this.doctorId = HelperUtils.generateId("DOC");
+        this.availableSlots = new ArrayList<>();
+        this.assignedPatients = new ArrayList<>();
     }
 
-    public <E> Doctor(String doc2, String fatima, String ali, String doc21, String consultant, String phD, int i, String neurology, double v, ArrayList<E> es, ArrayList<E> es1) {
+    public Doctor(String id, String firstName, String lastName, LocalDate dob, String gender, String phone, String email, String address, String doc, String specialization, String qualification, int experienceYears, String departmentId, double consultationFee) {
+    }
+
+    public <E> Doctor(String idDoctor, String firstName, String lastName, String idDoctor1, String specialization, String qualification, int experience, Object o, double fee, ArrayList<E> es, ArrayList<E> es1) {
     }
 
     public String getDoctorId() {
         return doctorId;
     }
+
     public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+        if (HelperUtils.isValidString(doctorId))
+            this.doctorId = doctorId;
     }
 
     public String getSpecialization() {
         return specialization;
     }
+
     public void setSpecialization(String specialization) {
-        this.specialization = specialization;
+        if (HelperUtils.isValidString(specialization, 3, 50))
+            this.specialization = specialization;
     }
 
     public String getQualification() {
         return qualification;
     }
+
     public void setQualification(String qualification) {
-        this.qualification = qualification;
+        if (HelperUtils.isValidString(qualification, 2, 50))
+            this.qualification = qualification;
     }
 
     public int getExperienceYears() {
         return experienceYears;
     }
+
     public void setExperienceYears(int experienceYears) {
-        this.experienceYears = experienceYears;
+        if (HelperUtils.isValidNumber(experienceYears, 0, 60))
+            this.experienceYears = experienceYears;
     }
 
     public String getDepartmentId() {
         return departmentId;
     }
+
     public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+        if (HelperUtils.isValidString(departmentId))
+            this.departmentId = departmentId;
     }
 
     public double getConsultationFee() {
         return consultationFee;
     }
+
     public void setConsultationFee(double consultationFee) {
-        this.consultationFee = consultationFee;
+        if (HelperUtils.isValidNumber(consultationFee, 0.0, 10000.0))
+            this.consultationFee = consultationFee;
     }
 
     public List<String> getAvailableSlots() {
         return availableSlots;
     }
+
     public List<String> getAssignedPatients() {
-        return assignedPatients; }
+        return assignedPatients;
+    }
 
     public void assignPatient(String patientId) {
-        if (patientId != null && !assignedPatients.contains(patientId))
+        if (HelperUtils.isValidString(patientId) && !assignedPatients.contains(patientId)) {
             assignedPatients.add(patientId);
+        }
     }
 
     public void removePatient(String patientId) {
-        assignedPatients.remove(patientId);
+        if (HelperUtils.isValidString(patientId)) {
+            assignedPatients.remove(patientId);
+        }
     }
 
     public void updateAvailability(List<String> slots) {
-        this.availableSlots = (slots != null) ? slots : new ArrayList<>();
+        this.availableSlots = HelperUtils.isNotNull(slots) ? slots : new ArrayList<>();
     }
 
     public void addAvailableSlot(String slot) {
-        if (slot != null && !availableSlots.contains(slot))
+        if (HelperUtils.isValidString(slot) && !availableSlots.contains(slot)) {
             availableSlots.add(slot);
+        }
     }
 
     @Override

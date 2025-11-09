@@ -1,5 +1,8 @@
 package Entities;
 
+import Utils.HelperUtils;
+import Utils.InputHandler;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -15,77 +18,103 @@ public class Person {
 
     public Person(String id, String firstName, String lastName, LocalDate dateOfBirth,
                   String gender, String phoneNumber, String email, String address) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.address = address;
+        this.id = HelperUtils.isNotNull(id) ? id : HelperUtils.generateId("PER");
+        setFirstName(firstName);
+        setLastName(lastName);
+        setDateOfBirth(dateOfBirth);
+        setGender(gender);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setAddress(address);
     }
 
     public Person() {
-
+        this.id = HelperUtils.generateId("PER");
     }
-
 
     public String getId() {
         return id;
     }
     public void setId(String id) {
-        this.id = id;
+        this.id = HelperUtils.isNotNull(id) ? id : HelperUtils.generateId("PER");
     }
 
     public String getFirstName() {
         return firstName;
     }
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if (HelperUtils.isValidString(firstName, 2))
+            this.firstName = HelperUtils.capitalize(firstName);
+        else
+            this.firstName = "Unknown";
     }
 
     public String getLastName() {
         return lastName;
     }
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if (HelperUtils.isValidString(lastName, 2))
+            this.lastName = HelperUtils.capitalize(lastName);
+        else
+            this.lastName = "Unknown";
     }
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
+
     public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+        while (true) {
+            if (dateOfBirth.isBefore(LocalDate.now())) {
+                this.dateOfBirth = dateOfBirth;
+                break;
+            } else {
+                System.out.println(" Invalid date of birth. Please enter a valid past date (yyyy-MM-dd):");
+                dateOfBirth = InputHandler.getDateInput("Enter Date of Birth (yyyy-MM-dd): ");
+            }
+        }
     }
 
     public String getGender() {
         return gender;
     }
     public void setGender(String gender) {
+        while (HelperUtils.isNull(gender) || !(gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("F"))) {
+            gender = InputHandler.getStringInput("Invalid gender. Please enter 'Male' or 'Female': ");
+        }
         this.gender = gender;
     }
+
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        if (HelperUtils.isValidString(phoneNumber, 8, 15))
+            this.phoneNumber = phoneNumber;
+        else
+            this.phoneNumber = "N/A";
     }
 
     public String getEmail() {
         return email;
     }
     public void setEmail(String email) {
-        this.email = email;
+        if (HelperUtils.isValidString(email) && email.contains("@"))
+            this.email = email;
+        else
+            this.email = "N/A";
     }
 
     public String getAddress() {
         return address;
     }
     public void setAddress(String address) {
-        this.address = address;
+        if (HelperUtils.isValidString(address, 3))
+            this.address = address;
+        else
+            this.address = "N/A";
     }
-
 
     public void displayInfo() {
         System.out.println("ID: " + id);
@@ -104,9 +133,10 @@ public class Person {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o)
+            return true;
+        if (HelperUtils.isNull(o) || getClass() != o.getClass())
+            return false;
         Person person = (Person) o;
         return Objects.equals(id, person.id);
     }

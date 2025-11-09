@@ -1,8 +1,12 @@
 package Entities;
 
+import Utils.HelperUtils;
+import Utils.InputHandler;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Patient extends Person {
     private String patientId;
@@ -53,70 +57,105 @@ public class Patient extends Person {
     public Patient(String p001, String salim, String alHabsi, LocalDate of, String male, String number, String mail, String muscat, String regular) {
     }
 
+    public Patient() {
+
+    }
+
     public String getPatientId() {
         return patientId;
     }
+
     public void setPatientId(String patientId) {
-        this.patientId = patientId;
+        if (!HelperUtils.isValidString(patientId)) {
+            this.patientId = HelperUtils.generateId("PAT");
+        } else {
+            this.patientId = patientId.trim();
+        }
     }
 
     public String getBloodGroup() {
         return bloodGroup;
     }
+
     public void setBloodGroup(String bloodGroup) {
+        List<String> validGroups = List.of("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-");
+        while (bloodGroup == null || !validGroups.contains(bloodGroup.toUpperCase())) {
+            System.out.println("Invalid blood group. Please enter a valid type (A+, A-, B+, B-, AB+, AB-, O+, O-):");
+            bloodGroup = InputHandler.getStringInput("Enter Blood Group: ");
+        }
         this.bloodGroup = bloodGroup;
     }
+
 
     public List<String> getAllergies() {
         return allergies;
     }
+
     public void setAllergies(List<String> allergies) {
-        this.allergies = allergies;
+        this.allergies = HelperUtils.isNotNull(allergies) ? allergies : new ArrayList<>();
     }
+
     public void addAllergy(String allergy) {
-        this.allergies.add(allergy);
+        if (HelperUtils.isValidString(allergy)) {
+            if (this.allergies == null) this.allergies = new ArrayList<>();
+            this.allergies.add(allergy.trim());
+        }
     }
 
     public String getEmergencyContact() {
         return emergencyContact;
     }
+
     public void setEmergencyContact(String emergencyContact) {
-        this.emergencyContact = emergencyContact;
+        if (HelperUtils.isValidString(emergencyContact, 8, 15)) {
+            this.emergencyContact = emergencyContact.trim();
+        } else {
+            this.emergencyContact = "N/A";
+        }
     }
 
     public LocalDate getRegistrationDate() {
         return registrationDate;
     }
+
     public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
+        this.registrationDate = HelperUtils.isNotNull(registrationDate) ? registrationDate : LocalDate.now();
     }
 
     public String getInsuranceId() {
         return insuranceId;
     }
+
     public void setInsuranceId(String insuranceId) {
-        this.insuranceId = insuranceId;
+        if (HelperUtils.isValidString(insuranceId, 3, 15)) {
+            this.insuranceId = insuranceId.trim().toUpperCase();
+        } else {
+            this.insuranceId = "N/A";
+        }
     }
 
     public List<MedicalRecord> getMedicalRecords() {
         return medicalRecords;
     }
+
     public List<Appointment> getAppointments() {
         return appointments;
     }
 
     public void addMedicalRecord(MedicalRecord record) {
-        if (record != null)
-            medicalRecords.add(record);
+        if (HelperUtils.isNotNull(record)) {
+            this.medicalRecords.add(record);
+        }
     }
 
     public void addAppointment(Appointment appointment) {
-        if (appointment != null)
-            appointments.add(appointment);
+        if (HelperUtils.isNotNull(appointment)) {
+            this.appointments.add(appointment);
+        }
     }
 
     public void updateInsurance(String newInsuranceId) {
-        this.insuranceId = newInsuranceId;
+        setInsuranceId(newInsuranceId);
     }
 
     @Override

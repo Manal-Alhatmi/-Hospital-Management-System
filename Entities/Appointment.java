@@ -1,5 +1,7 @@
 package Entities;
 
+import Utils.HelperUtils;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -13,80 +15,131 @@ public class Appointment {
     private String reason;
     private String notes;
 
+    public Appointment(String patientId, String doctorId,
+                       LocalDate appointmentDate, String appointmentTime,
+                       String status, String reason, String notes) {
+
+        this.appointmentId = HelperUtils.generateId("APT");
+
+        setPatientId(patientId);
+        setDoctorId(doctorId);
+        setAppointmentDate(appointmentDate);
+        setAppointmentTime(appointmentTime);
+        setStatus(status);
+        setReason(reason);
+        setNotes(notes);
+    }
+
     public Appointment(String appointmentId, String patientId, String doctorId,
                        LocalDate appointmentDate, String appointmentTime,
                        String status, String reason, String notes) {
-        this.appointmentId = appointmentId;
-        this.patientId = patientId;
-        this.doctorId = doctorId;
-        this.appointmentDate = appointmentDate;
-        this.appointmentTime = appointmentTime;
-        this.status = status;
-        this.reason = reason;
-        this.notes = notes;
+        this.appointmentId = HelperUtils.isValidString(appointmentId)
+                ? appointmentId : HelperUtils.generateId("APT");
+        setPatientId(patientId);
+        setDoctorId(doctorId);
+        setAppointmentDate(appointmentDate);
+        setAppointmentTime(appointmentTime);
+        setStatus(status);
+        setReason(reason);
+        setNotes(notes);
     }
+
 
     public String getAppointmentId() {
         return appointmentId;
     }
+
     public void setAppointmentId(String appointmentId) {
-        this.appointmentId = appointmentId;
+        if (HelperUtils.isValidString(appointmentId))
+            this.appointmentId = appointmentId;
     }
 
     public String getPatientId() {
         return patientId;
     }
+
     public void setPatientId(String patientId) {
-        this.patientId = patientId;
+        if (HelperUtils.isValidString(patientId))
+            this.patientId = patientId;
+        else
+            System.out.println("Invalid patient ID.");
     }
 
     public String getDoctorId() {
         return doctorId;
     }
+
     public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+        if (HelperUtils.isValidString(doctorId))
+            this.doctorId = doctorId;
+        else
+            System.out.println("Invalid doctor ID.");
     }
 
     public LocalDate getAppointmentDate() {
         return appointmentDate;
     }
+
     public void setAppointmentDate(LocalDate appointmentDate) {
-        this.appointmentDate = appointmentDate;
+        if (HelperUtils.isNotNull(appointmentDate))
+            this.appointmentDate = appointmentDate;
+        else
+            this.appointmentDate = LocalDate.now();
     }
 
     public String getAppointmentTime() {
         return appointmentTime;
     }
+
     public void setAppointmentTime(String appointmentTime) {
-        this.appointmentTime = appointmentTime;
+        if (HelperUtils.isValidString(appointmentTime))
+            this.appointmentTime = appointmentTime;
+        else
+            System.out.println("Invalid appointment time.");
     }
 
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
-        this.status = status;
+        if (HelperUtils.isValidString(status))
+            this.status = HelperUtils.capitalize(status);
+        else
+            this.status = "Pending";
     }
 
     public String getReason() {
         return reason;
     }
+
     public void setReason(String reason) {
-        this.reason = reason;
+        if (HelperUtils.isValidString(reason))
+            this.reason = reason;
+        else
+            this.reason = "General Checkup";
     }
 
     public String getNotes() {
         return notes;
     }
+
     public void setNotes(String notes) {
-        this.notes = notes;
+        if (HelperUtils.isValidString(notes))
+            this.notes = notes;
+        else
+            this.notes = "";
     }
 
 
     public void reschedule(LocalDate newDate, String newTime) {
-        this.appointmentDate = newDate;
-        this.appointmentTime = newTime;
-        this.status = "Rescheduled";
+        if (HelperUtils.isNotNull(newDate) && HelperUtils.isValidString(newTime)) {
+            this.appointmentDate = newDate;
+            this.appointmentTime = newTime;
+            this.status = "Rescheduled";
+        } else {
+            System.out.println("Invalid reschedule details.");
+        }
     }
 
     public void cancel() {
@@ -101,30 +154,32 @@ public class Appointment {
         System.out.println("Appointment ID: " + appointmentId);
         System.out.println("Patient ID: " + patientId);
         System.out.println("Doctor ID: " + doctorId);
-        System.out.println("Date: " + appointmentDate + " Time: " + appointmentTime);
+        System.out.println("Date: " + appointmentDate + " | Time: " + appointmentTime);
         System.out.println("Status: " + status);
         System.out.println("Reason: " + reason);
         System.out.println("Notes: " + notes);
     }
 
-
-
     public void addNotes(String notes) {
-        this.notes = (this.notes == null ? "" : this.notes + "\n") + notes;
-        System.out.println("Notes added: " + notes);
+        if (HelperUtils.isValidString(notes)) {
+            this.notes = (HelperUtils.isNull(this.notes) ? "" : this.notes + "\n") + notes;
+            System.out.println("Notes added: " + notes);
+        }
     }
-
 
     public void addNotes(String notes, String addedBy) {
-        String entry = "[" + addedBy + "]: " + notes;
-        this.notes = (this.notes == null ? "" : this.notes + "\n") + entry;
-        System.out.println("Notes added by " + addedBy);
+        if (HelperUtils.isValidString(notes) && HelperUtils.isValidString(addedBy)) {
+            String entry = "[" + addedBy + "]: " + notes;
+            this.notes = (HelperUtils.isNull(this.notes) ? "" : this.notes + "\n") + entry;
+            System.out.println("Notes added by " + addedBy);
+        }
     }
 
-
     public void addNotes(String notes, String addedBy, LocalDateTime timestamp) {
-        String entry = "[" + timestamp + " - " + addedBy + "]: " + notes;
-        this.notes = (this.notes == null ? "" : this.notes + "\n") + entry;
-        System.out.println("Notes added by " + addedBy + " at " + timestamp);
+        if (HelperUtils.isValidString(notes) && HelperUtils.isValidString(addedBy) && HelperUtils.isNotNull(timestamp)) {
+            String entry = "[" + timestamp + " - " + addedBy + "]: " + notes;
+            this.notes = (HelperUtils.isNull(this.notes) ? "" : this.notes + "\n") + entry;
+            System.out.println("Notes added by " + addedBy + " at " + timestamp);
+        }
     }
 }

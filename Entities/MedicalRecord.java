@@ -1,5 +1,6 @@
 package Entities;
 
+import Utils.HelperUtils;
 import java.time.LocalDate;
 
 public class MedicalRecord {
@@ -12,78 +13,105 @@ public class MedicalRecord {
     private String testResults;
     private String notes;
 
+
+
     public MedicalRecord(String recordId, String patientId, String doctorId, LocalDate visitDate,
                          String diagnosis, String prescription, String testResults, String notes) {
-        this.recordId = recordId;
-        this.patientId = patientId;
-        this.doctorId = doctorId;
-        this.visitDate = visitDate;
-        this.diagnosis = diagnosis;
-        this.prescription = prescription;
-        this.testResults = testResults;
-        this.notes = notes;
+        setRecordId(HelperUtils.isValidString(recordId) ? recordId : HelperUtils.generateId("MR"));
+        setPatientId(patientId);
+        setDoctorId(doctorId);
+        setVisitDate(visitDate);
+        setDiagnosis(diagnosis);
+        setPrescription(prescription);
+        setTestResults(testResults);
+        setNotes(notes);
     }
 
-    public MedicalRecord(String id, String patientId, String doctorId, String diagnosis, String treatment, String date) {
+    public MedicalRecord(String patientId, String doctorId, String diagnosis, String prescription) {
+        this(HelperUtils.generateId("MR"), patientId, doctorId, LocalDate.now(), diagnosis, prescription, "Pending", "No additional notes"
+        );
     }
+
 
     public String getRecordId() {
         return recordId;
     }
+
     public void setRecordId(String recordId) {
-        this.recordId = recordId;
+        this.recordId = HelperUtils.isValidString(recordId) ? recordId : HelperUtils.generateId("MR");
     }
 
     public String getPatientId() {
         return patientId;
     }
+
     public void setPatientId(String patientId) {
-        this.patientId = patientId;
+        if (HelperUtils.isValidString(patientId)) {
+            this.patientId = patientId;
+        } else {
+            System.out.println("Invalid patient ID. Assigning default generated ID.");
+            this.patientId = HelperUtils.generateId("PAT");
+        }
     }
 
     public String getDoctorId() {
         return doctorId;
     }
+
     public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+        this.doctorId = HelperUtils.isValidString(doctorId)
+                ? doctorId
+                : HelperUtils.generateId("DOC");
     }
 
     public LocalDate getVisitDate() {
         return visitDate;
     }
+
     public void setVisitDate(LocalDate visitDate) {
-        this.visitDate = visitDate;
+        if (HelperUtils.isNotNull(visitDate)) {
+            this.visitDate = visitDate;
+        } else {
+            System.out.println("Visit date not provided, defaulting to current date.");
+            this.visitDate = LocalDate.now();
+        }
     }
 
     public String getDiagnosis() {
         return diagnosis;
     }
+
     public void setDiagnosis(String diagnosis) {
-        this.diagnosis = diagnosis;
+        this.diagnosis = HelperUtils.isValidString(diagnosis) ? diagnosis : "Unknown Diagnosis";
     }
 
     public String getPrescription() {
         return prescription;
     }
+
     public void setPrescription(String prescription) {
-        this.prescription = prescription;
+        this.prescription = HelperUtils.isValidString(prescription) ? prescription : "No Prescription";
     }
 
     public String getTestResults() {
         return testResults;
     }
+
     public void setTestResults(String testResults) {
-        this.testResults = testResults;
+        this.testResults = HelperUtils.isValidString(testResults) ? testResults : "Not Available";
     }
 
     public String getNotes() {
         return notes;
     }
+
     public void setNotes(String notes) {
-        this.notes = notes;
+        this.notes = HelperUtils.isValidString(notes) ? notes : "No Notes Recorded";
     }
 
+
     public void displayInfo() {
+        System.out.println("\n🩺 --- Medical Record Details ---");
         System.out.println("Record ID: " + recordId);
         System.out.println("Patient ID: " + patientId);
         System.out.println("Doctor ID: " + doctorId);

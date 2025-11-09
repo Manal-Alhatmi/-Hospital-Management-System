@@ -1,5 +1,7 @@
 package Entities;
 
+import Utils.HelperUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,44 +16,55 @@ public class Department {
 
     public Department(String departmentId, String departmentName, String headDoctorId,
                       List<String> doctors, List<String> nurses, int bedCapacity, int availableBeds) {
-        this.departmentId = departmentId;
-        this.departmentName = departmentName;
-        this.headDoctorId = headDoctorId;
-        this.doctors = (doctors != null) ? doctors : new ArrayList<>();
-        this.nurses = (nurses != null) ? nurses : new ArrayList<>();
-        this.bedCapacity = bedCapacity;
-        this.availableBeds = availableBeds;
+
+        this.departmentId = HelperUtils.isValidString(departmentId) ? departmentId : HelperUtils.generateId("DEP");
+        setDepartmentName(departmentName);
+        setHeadDoctorId(headDoctorId);
+        setBedCapacity(bedCapacity);
+        setAvailableBeds(availableBeds);
+
+        this.doctors = HelperUtils.isNotNull(doctors) ? doctors : new ArrayList<>();
+        this.nurses = HelperUtils.isNotNull(nurses) ? nurses : new ArrayList<>();
     }
 
-    public Department(String departmentId, String departmentName, String headDoctorId, int bedCapacity) {
-        this(departmentId, departmentName, headDoctorId, null, null, bedCapacity, bedCapacity);
+    public Department(String departmentName, String headDoctorId, int bedCapacity) {
+        this(null, departmentName, headDoctorId, null, null, bedCapacity, bedCapacity);
     }
 
+    public Department(String deptId, String deptName, String headDoctorId, int bedCapacity) {
+    }
 
     public String getDepartmentId() {
         return departmentId;
     }
+
     public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+        if (HelperUtils.isValidString(departmentId))
+            this.departmentId = departmentId;
     }
 
     public String getDepartmentName() {
         return departmentName;
     }
+
     public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+        if (HelperUtils.isValidString(departmentName, 3, 50))
+            this.departmentName = departmentName;
     }
 
     public String getHeadDoctorId() {
         return headDoctorId;
     }
+
     public void setHeadDoctorId(String headDoctorId) {
-        this.headDoctorId = headDoctorId;
+        if (HelperUtils.isValidString(headDoctorId))
+            this.headDoctorId = headDoctorId;
     }
 
     public List<String> getDoctors() {
         return doctors;
     }
+
     public List<String> getNurses() {
         return nurses;
     }
@@ -59,29 +72,35 @@ public class Department {
     public int getBedCapacity() {
         return bedCapacity;
     }
+
     public void setBedCapacity(int bedCapacity) {
-        this.bedCapacity = bedCapacity;
+        if (HelperUtils.isValidNumber(bedCapacity, 1, 1000))
+            this.bedCapacity = bedCapacity;
     }
 
     public int getAvailableBeds() {
         return availableBeds;
     }
+
     public void setAvailableBeds(int availableBeds) {
-        this.availableBeds = availableBeds;
+        if (HelperUtils.isValidNumber(availableBeds, 0, bedCapacity))
+            this.availableBeds = availableBeds;
     }
 
     public void assignDoctor(String doctorId) {
-        if (doctorId != null && !doctors.contains(doctorId))
+        if (HelperUtils.isValidString(doctorId) && !doctors.contains(doctorId)) {
             doctors.add(doctorId);
+        }
     }
 
     public void assignNurse(String nurseId) {
-        if (nurseId != null && !nurses.contains(nurseId))
+        if (HelperUtils.isValidString(nurseId) && !nurses.contains(nurseId)) {
             nurses.add(nurseId);
+        }
     }
 
     public void updateBedAvailability(int newAvailableBeds) {
-        if (newAvailableBeds >= 0 && newAvailableBeds <= bedCapacity) {
+        if (HelperUtils.isValidNumber(newAvailableBeds, 0, bedCapacity)) {
             this.availableBeds = newAvailableBeds;
         }
     }
