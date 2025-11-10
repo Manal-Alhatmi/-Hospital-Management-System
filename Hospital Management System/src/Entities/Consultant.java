@@ -20,11 +20,16 @@ public class Consultant extends Doctor {
         this.onlineConsultationAvailable = onlineConsultationAvailable;
         this.consultationDuration = consultationDuration;
     }
+
+    public Consultant() {
+
+    }
+
     public void setConsultationDuration(int consultationDuration) {
         if (HelperUtils.isValidNumber(consultationDuration, 10, 120))
             this.consultationDuration = consultationDuration;
         else {
-            this.consultationDuration = 30; // default duration
+            this.consultationDuration = 30;
             System.out.println("Invalid consultation duration. Default (30 mins) applied.");
         }
     }

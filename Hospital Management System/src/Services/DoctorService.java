@@ -1,10 +1,11 @@
 package Services;
 
-import Entities.Doctor;
-import Entities.Patient;
+import Entities.*;
 import Interface.Manageable;
+import Utils.HelperUtils;
 import Utils.InputHandler;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -233,5 +234,74 @@ public class DoctorService implements Manageable {
     @Override
     public List<Doctor> getAll() {
         return doctorList;
+    }
+
+    public static void addSampleDoctors() {
+        // Surgeons (3)
+        for (int i = 0; i < 3; i++) {
+            Surgeon doctor = new Surgeon();
+            doctor.setId(HelperUtils.generateId("PER"));
+            doctor.setDoctorId("DOC00" + (i + 1));
+            doctor.setFirstName("Surgeon" + (i + 1));
+            doctor.setLastName("Al Saadi");
+            doctor.setGender(i % 2 == 0 ? "Male" : "Female");
+            doctor.setDateOfBirth(LocalDate.of(1975 + i, (i % 12) + 1, (i % 27) + 1));
+            doctor.setPhoneNumber("7911111" + i);
+            doctor.setEmail("surgeon" + (i + 1) + "@hospital.com");
+            doctor.setAddress("Muscat, Oman - Area " + i);
+            doctor.setSpecialization(i == 0 ? "Cardiac Surgery" : i == 1 ? "Neuro Surgery" : "General Surgery");
+            doctor.setQualification("MD");
+            doctor.setExperienceYears(10 + i);
+            doctor.setDepartmentId("DEPT" + (i + 1));
+            doctor.setConsultationFee(150.0 + (i * 25));
+            doctor.setSurgeriesPerformed(100 + (i * 50));
+            doctor.setOperationTheatreAccess(true);
+            doctorList.add(doctor);
+        }
+
+        // Consultants (3)
+        for (int i = 0; i < 3; i++) {
+            Consultant doctor = new Consultant();
+            doctor.setId(HelperUtils.generateId("PER"));
+            doctor.setDoctorId("DOC00" + (i + 4));
+            doctor.setFirstName("Consultant" + (i + 1));
+            doctor.setLastName("Al Hinai");
+            doctor.setGender(i % 2 == 0 ? "Female" : "Male");
+            doctor.setDateOfBirth(LocalDate.of(1978 + i, (i % 12) + 1, (i % 27) + 1));
+            doctor.setPhoneNumber("7922222" + i);
+            doctor.setEmail("consultant" + (i + 1) + "@hospital.com");
+            doctor.setAddress("Sohar, Oman - Block " + i);
+            doctor.setSpecialization(i == 0 ? "Cardiology" : i == 1 ? "Neurology" : "Emergency Medicine");
+            doctor.setQualification("PhD");
+            doctor.setExperienceYears(8 + i);
+            doctor.setDepartmentId("DEPT" + (i + 1));
+            doctor.setConsultationFee(120.0 + (i * 20));
+            doctor.setOnlineConsultationAvailable(i % 2 == 0);
+            doctor.setConsultationDuration(45);
+            doctorList.add(doctor);
+        }
+
+        // General Practitioners (2)
+        for (int i = 0; i < 2; i++) {
+            GeneralPractitioner doctor = new GeneralPractitioner();
+            doctor.setId(HelperUtils.generateId("PER"));
+            doctor.setDoctorId("DOC00" + (i + 7));
+            doctor.setFirstName("GP" + (i + 1));
+            doctor.setLastName("Al Rashdi");
+            doctor.setGender(i % 2 == 0 ? "Male" : "Female");
+            doctor.setDateOfBirth(LocalDate.of(1985 + i, (i % 12) + 1, (i % 27) + 1));
+            doctor.setPhoneNumber("7933333" + i);
+            doctor.setEmail("gp" + (i + 1) + "@hospital.com");
+            doctor.setAddress("Nizwa, Oman - Street " + i);
+            doctor.setSpecialization("General Practice");
+            doctor.setQualification("MBBS");
+            doctor.setExperienceYears(5 + i);
+            doctor.setConsultationFee(80.0 + (i * 10));
+            doctor.setWalkinAvailable(true);
+            doctor.setHomeVisitAvailable(i % 2 == 0);
+            doctor.setVaccinationCertified(true);
+            doctorList.add(doctor);
+        }
+        System.out.println("=== Sample Doctors Added Successfully ===");
     }
 }

@@ -15,21 +15,6 @@ public class Appointment {
     private String reason;
     private String notes;
 
-    public Appointment(String patientId, String doctorId,
-                       LocalDate appointmentDate, String appointmentTime,
-                       String status, String reason, String notes) {
-
-        this.appointmentId = HelperUtils.generateId("APT");
-
-        setPatientId(patientId);
-        setDoctorId(doctorId);
-        setAppointmentDate(appointmentDate);
-        setAppointmentTime(appointmentTime);
-        setStatus(status);
-        setReason(reason);
-        setNotes(notes);
-    }
-
     public Appointment(String appointmentId, String patientId, String doctorId,
                        LocalDate appointmentDate, String appointmentTime,
                        String status, String reason, String notes) {
@@ -42,6 +27,10 @@ public class Appointment {
         setStatus(status);
         setReason(reason);
         setNotes(notes);
+    }
+
+    public Appointment() {
+
     }
 
 

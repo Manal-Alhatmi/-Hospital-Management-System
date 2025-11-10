@@ -9,6 +9,10 @@ public class Surgeon extends Doctor {
     private List<String> surgeryTypes = new ArrayList<>();
     private boolean operationTheatreAccess;
 
+    public Surgeon() {
+
+    }
+
     public int getSurgeriesPerformed() {
         return surgeriesPerformed;
     }

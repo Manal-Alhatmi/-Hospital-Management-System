@@ -7,8 +7,8 @@ public class HospitalManagementApp {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        addSampleDataForAll();
         int mainChoice = 0;
-
         while (mainChoice != 8) {
             System.out.println("\n Welcome to the Hospital Management System!");
             System.out.println("1. Patient Management");
@@ -330,5 +330,13 @@ public class HospitalManagementApp {
                 System.out.println("Invalid choice");
             }
         }
+    }
+    public static void addSampleDataForAll() {
+        DepartmentService.addSampleDepartments();
+        DoctorService.addSampleDoctors();
+        NurseService.addSampleNurses();
+        PatientService.addSamplePatients();
+        AppointmentService.addSampleAppointments();
+        MedicalRecordService.addSampleMedicalRecords();
     }
 }

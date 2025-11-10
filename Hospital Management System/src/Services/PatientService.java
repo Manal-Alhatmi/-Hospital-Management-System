@@ -1,7 +1,6 @@
 package Services;
 
-import Entities.MedicalRecord;
-import Entities.Patient;
+import Entities.*;
 import Utils.HelperUtils;
 import Utils.InputHandler;
 
@@ -251,5 +250,106 @@ public class PatientService {
                 return true;
         }
         return false;
+    }
+
+    public static void addSamplePatients() {
+        // Regular Patients (3)
+        for (int i = 0; i < 3; i++) {
+            Patient patient = new Patient();
+            patient.setId("PER-PAT" + (i + 1));
+            patient.setPatientId("PAT00" + (i + 1));
+            patient.setFirstName("Regular" + i);
+            patient.setLastName("Al Mahrouqi");
+            patient.setGender(i % 2 == 0 ? "Male" : "Female");
+            patient.setDateOfBirth(LocalDate.of(1990 + i, (i % 12) + 1, (i % 27) + 1));
+            patient.setPhoneNumber("9000000" + i);
+            patient.setEmail("regular" + i + "@example.com");
+            patient.setAddress("Muscat, Oman - Block " + i);
+            patient.setBloodGroup(i % 2 == 0 ? "O+" : "A+");
+            patient.setAllergies(List.of(i % 2 == 0 ? "None" : "Dust"));
+            patient.setEmergencyContact("9333000" + i);
+            patient.setRegistrationDate(LocalDate.now().minusDays(i));
+            patient.setInsuranceId("INS-R" + i);
+            patientList.add(patient);
+        }
+
+        // InPatients (3)
+        for (int i = 0; i < 3; i++) {
+            InPatient patient = new InPatient();
+            patient.setId("PER-INP" + (i + 1));
+            patient.setPatientId("INP00" + (i + 1));
+            patient.setFirstName("InPatient" + i);
+            patient.setLastName("Al Hinai");
+            patient.setGender(i % 2 == 0 ? "Male" : "Female");
+            patient.setDateOfBirth(LocalDate.of(1985 + i, (i % 12) + 1, (i % 27) + 1));
+            patient.setPhoneNumber("9111111" + i);
+            patient.setEmail("inpatient" + i + "@example.com");
+            patient.setAddress("Sohar, Oman - Building " + i);
+            patient.setBloodGroup(i % 2 == 0 ? "B+" : "AB+");
+            patient.setAllergies(List.of("None"));
+            patient.setEmergencyContact("9444000" + i);
+            patient.setRegistrationDate(LocalDate.now().minusDays(i + 1));
+            patient.setInsuranceId("INS-I" + i);
+            patient.setRoomNumber("R" + (100 + i));
+            patient.setBedNumber("B" + (i + 1));
+            patient.setAdmissionDate(LocalDate.now().minusDays(i));
+            patient.setDischargeDate(LocalDate.now().plusDays(2));
+            patient.setAdmittingDoctorId("DOC00" + ((i % 8) + 1));
+            patient.setDailyCharges(200.0 + (i * 50.0));
+            patientList.add(patient);
+        }
+
+        // OutPatients (2)
+        for (int i = 0; i < 2; i++) {
+            OutPatient patient = new OutPatient();
+            patient.setId("PER-OUT" + (i + 1));
+            patient.setPatientId("OUT00" + (i + 1));
+            patient.setFirstName("OutPatient" + i);
+            patient.setLastName("Al Balushi");
+            patient.setGender(i % 2 == 0 ? "Female" : "Male");
+            patient.setDateOfBirth(LocalDate.of(1995 + i, (i % 12) + 1, (i % 27) + 1));
+            patient.setPhoneNumber("9222222" + i);
+            patient.setEmail("outpatient" + i + "@example.com");
+            patient.setAddress("Nizwa, Oman - Street " + i);
+            patient.setBloodGroup(i % 2 == 0 ? "A+" : "O+");
+            patient.setAllergies(List.of("Pollen"));
+            patient.setEmergencyContact("9555000" + i);
+            patient.setRegistrationDate(LocalDate.now().minusDays(i + 2));
+            patient.setInsuranceId("INS-O" + i);
+            patient.setLastVisitDate(LocalDate.now().minusDays(i));
+            patient.setVisitCount(i + 1);
+            patientList.add(patient);
+        }
+
+        // Emergency Patients (2)
+        for (int i = 0; i < 2; i++) {
+            EmergencyPatient patient = new EmergencyPatient();
+            patient.setId("PER-EMP" + (i + 1));
+            patient.setPatientId("EMP00" + (i + 1));
+            patient.setFirstName("EmergencyPatient" + i);
+            patient.setLastName("Al Maskari");
+            patient.setGender(i % 2 == 0 ? "Male" : "Female");
+            patient.setDateOfBirth(LocalDate.of(1992 + i, (i % 12) + 1, (i % 27) + 1));
+            patient.setPhoneNumber("9333333" + i);
+            patient.setEmail("emergency" + i + "@example.com");
+            patient.setAddress("Salalah, Oman - Block " + i);
+            patient.setBloodGroup(i % 2 == 0 ? "B-" : "A-");
+            patient.setAllergies(List.of("None"));
+            patient.setEmergencyContact("9666000" + i);
+            patient.setRegistrationDate(LocalDate.now().minusDays(i + 3));
+            patient.setInsuranceId("INS-E" + i);
+            patient.setAdmissionDate(LocalDate.now());
+            patient.setDischargeDate(LocalDate.now().plusDays(1));
+            patient.setRoomNumber("ER-" + (200 + i));
+            patient.setBedNumber("E" + (i + 1));
+            patient.setAdmittingDoctorId("DOC00" + ((i % 8) + 1));
+            patient.setDailyCharges(350.0 + (i * 75.0));
+            patient.setAdmittedViaER(true);
+            patient.setEmergencyType(i % 2 == 0 ? "Accident" : "Heart Attack");
+            patient.setArrivalMode(i % 2 == 0 ? "Ambulance" : "Walk-in");
+            patient.setTriageLevel((i % 3) + 1);
+            patientList.add(patient);
+        }
+        System.out.println("=== Sample Patients Added Successfully ===");
     }
 }

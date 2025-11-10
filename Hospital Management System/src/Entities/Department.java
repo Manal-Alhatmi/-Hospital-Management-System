@@ -27,11 +27,11 @@ public class Department {
         this.nurses = HelperUtils.isNotNull(nurses) ? nurses : new ArrayList<>();
     }
 
-    public Department(String departmentName, String headDoctorId, int bedCapacity) {
-        this(null, departmentName, headDoctorId, null, null, bedCapacity, bedCapacity);
+    public Department(String deptId, String deptName, String headDoctorId, int bedCapacity) {
     }
 
-    public Department(String deptId, String deptName, String headDoctorId, int bedCapacity) {
+    public Department() {
+
     }
 
     public String getDepartmentId() {
@@ -88,12 +88,19 @@ public class Department {
     }
 
     public void assignDoctor(String doctorId) {
+        if (doctors == null) {
+            doctors = new ArrayList<>();
+        }
         if (HelperUtils.isValidString(doctorId) && !doctors.contains(doctorId)) {
             doctors.add(doctorId);
         }
     }
 
+
     public void assignNurse(String nurseId) {
+        if (nurses == null) {
+            nurses = new ArrayList<>();
+        }
         if (HelperUtils.isValidString(nurseId) && !nurses.contains(nurseId)) {
             nurses.add(nurseId);
         }

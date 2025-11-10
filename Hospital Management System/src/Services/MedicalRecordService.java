@@ -12,7 +12,7 @@ public class MedicalRecordService {
     public static List<MedicalRecord> records = new ArrayList<>();
 
     public static MedicalRecord inputRecord() {
-        System.out.println("\n Create New Medical Record");
+        System.out.println("\nCreate New Medical Record");
 
         String recordId = InputHandler.getStringInput("Enter Record ID: ");
         String patientId = InputHandler.getStringInput("Enter Patient ID: ");
@@ -145,5 +145,21 @@ public class MedicalRecordService {
 
         if (!found)
             System.out.println("No medical history found for this patient.");
+    }
+
+    public static void addSampleMedicalRecords() {
+        for (int i = 0; i < 12; i++) {
+            MedicalRecord record = new MedicalRecord();
+            record.setRecordId("MR00" + (i + 1));
+            record.setPatientId(i < 3 ? "PAT00" + (i + 1) : i < 6 ? "INP00" + (i - 2) : i < 8 ? "OUT00" + (i - 5) : "EMP00" + (i - 7));
+            record.setDoctorId("DOC00" + ((i % 8) + 1));
+            record.setVisitDate(LocalDate.now().minusDays(i + 1));
+            record.setDiagnosis("Diagnosis " + (i + 1));
+            record.setPrescription("Prescription " + (i + 1));
+            record.setTestResults("Test Results " + (i + 1));
+            record.setNotes("Medical record notes " + (i + 1));
+            records.add(record);
+        }
+        System.out.println("=== Sample Medical Records Added Successfully ===");
     }
 }

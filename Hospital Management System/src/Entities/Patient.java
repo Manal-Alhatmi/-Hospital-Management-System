@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
+
 
 public class Patient extends Person {
     private String patientId;
@@ -36,31 +36,18 @@ public class Patient extends Person {
     }
 
 
-    public Patient(String id, String firstName, String lastName, LocalDate dob,
-                   String phoneNumber, String email, String address, String patientId) {
-        this(id, firstName, lastName, dob, null, phoneNumber, email, address,
-                patientId, null, null, null, LocalDate.now(), null, null, null);
-    }
-
-    public Patient(String id, String firstName, String lastName, LocalDate dob,
-                   String gender, String phone, String email, String address,
-                   String patientId, String bloodGroup, String emergencyContact, String insuranceId) {
-        this(id, firstName, lastName, dob, gender, phone, email, address,
-                patientId, bloodGroup, new ArrayList<>(), emergencyContact,
-                LocalDate.now(), insuranceId, new ArrayList<>(), new ArrayList<>());
-    }
-
-    public Patient(String patientId, String firstName, String lastName) {
-        this(patientId, firstName, lastName, LocalDate.now(), null, null, null, null,
-                patientId, null, null, null);
-    }
-
-    public Patient(String p001, String salim, String alHabsi, LocalDate of, String male, String number, String mail, String muscat, String regular) {
-    }
-
     public Patient() {
-
+        super();
+        this.allergies = new ArrayList<>();
+        this.medicalRecords = new ArrayList<>();
+        this.appointments = new ArrayList<>();
+        this.registrationDate = LocalDate.now();
+        this.patientId = HelperUtils.generateId("PAT");
     }
+
+    public Patient(String id, String firstName, String lastName, LocalDate dob, String gender, String phone, String email, String address, String patientId, String bloodGroup, String emergencyContact, String insuranceId) {
+    }
+
 
     public String getPatientId() {
         return patientId;

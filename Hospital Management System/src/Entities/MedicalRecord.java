@@ -32,6 +32,10 @@ public class MedicalRecord {
         );
     }
 
+    public MedicalRecord() {
+
+    }
+
 
     public String getRecordId() {
         return recordId;
@@ -111,7 +115,7 @@ public class MedicalRecord {
 
 
     public void displayInfo() {
-        System.out.println("\n🩺 --- Medical Record Details ---");
+        System.out.println("\n --- Medical Record Details ---");
         System.out.println("Record ID: " + recordId);
         System.out.println("Patient ID: " + patientId);
         System.out.println("Doctor ID: " + doctorId);

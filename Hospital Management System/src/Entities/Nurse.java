@@ -31,9 +31,8 @@ public class Nurse extends Person {
         }
     }
 
-    public Nurse(String id, String firstName, String lastName, String departmentId, String shift) {
-        this(id, firstName, lastName, null, null, null, null, null,
-                HelperUtils.generateId("NUR"), departmentId, shift, "General", null);
+    public Nurse() {
+
     }
 
     public String getNurseId() {

@@ -91,10 +91,18 @@ public class Person {
         return gender;
     }
     public void setGender(String gender) {
-        while (HelperUtils.isNull(gender) || !(gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("F"))) {
+        if (HelperUtils.isNull(gender)) {
             gender = InputHandler.getStringInput("Invalid gender. Please enter 'M' or 'F': ");
         }
-        this.gender = gender;
+
+        if (gender.equalsIgnoreCase("Male")) gender = "M";
+        else if (gender.equalsIgnoreCase("Female")) gender = "F";
+
+        while (!gender.equalsIgnoreCase("M") && !gender.equalsIgnoreCase("F")) {
+            gender = InputHandler.getStringInput("Invalid gender. Please enter 'M' or 'F': ");
+        }
+
+        this.gender = gender.toUpperCase();
     }
 
 

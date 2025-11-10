@@ -7,6 +7,10 @@ public class OutPatient extends Patient {
     private LocalDate lastVisitDate;
     private String preferredDoctorId;
 
+    public OutPatient() {
+
+    }
+
     public int getVisitCount() {
         return visitCount;
     }

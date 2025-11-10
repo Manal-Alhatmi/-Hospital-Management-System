@@ -2,6 +2,7 @@ package Services;
 
 import Entities.Department;
 import Interface.Manageable;
+import Utils.HelperUtils;
 import Utils.InputHandler;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +151,7 @@ public class DepartmentService implements Manageable {
         return null;
     }
 
+
     @Override
     public void add(Object entity) {
 
@@ -163,5 +165,18 @@ public class DepartmentService implements Manageable {
     @Override
     public List<Department> getAll() {
         return departmentList;
+    }
+
+    public static void addSampleDepartments() {
+        for (int i = 0; i < 3; i++) {
+            Department dept = new Department();
+            dept.setDepartmentId("DEPT" + (i + 1));
+            dept.setDepartmentName(i == 0 ? "Cardiology" : i == 1 ? "Neurology" : "Emergency");
+            dept.setHeadDoctorId("DOC00" + (i + 1));
+            dept.setBedCapacity(i == 0 ? 25 : i == 1 ? 20 : 30);
+            dept.setAvailableBeds(i == 0 ? 18 : i == 1 ? 15 : 10);
+            departmentList.add(dept);
+        }
+        System.out.println("=== Sample Departments Added Successfully ===");
     }
 }

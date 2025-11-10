@@ -35,36 +35,20 @@ public class Doctor extends Person {
         this.assignedPatients = HelperUtils.isNotNull(assignedPatients) ? assignedPatients : new ArrayList<>();
     }
 
-    public Doctor(String id, String firstName, String lastName, String doctorId,
-                  String specialization, String qualification, int experienceYears,
-                  String departmentId, double consultationFee) {
-        this(id, firstName, lastName, null, null, null, null, null,
-                doctorId, specialization, qualification, experienceYears,
-                departmentId, consultationFee, null, null);
-    }
-
-    public Doctor(String doctorId, String firstName, String specialization) {
-        this(null, firstName, null, null, null, null, null, null,
-                doctorId, specialization, null, 0, null, 0.0,
-                new ArrayList<>(), new ArrayList<>());
+    public Doctor(String id, String firstName, String lastName, LocalDate dob, String gender, String phone, String email, String address, String doc, String specialization, String qualification, int experienceYears, String departmentId, double consultationFee) {
     }
 
     public Doctor() {
-        this.doctorId = HelperUtils.generateId("DOC");
-        this.availableSlots = new ArrayList<>();
-        this.assignedPatients = new ArrayList<>();
-    }
 
-    public Doctor(String id, String firstName, String lastName, LocalDate dob, String gender, String phone, String email, String address, String doc, String specialization, String qualification, int experienceYears, String departmentId, double consultationFee) {
     }
 
     public <E> Doctor(String idDoctor, String firstName, String lastName, String idDoctor1, String specialization, String qualification, int experience, Object o, double fee, ArrayList<E> es, ArrayList<E> es1) {
     }
 
+
     public String getDoctorId() {
         return doctorId;
     }
-
     public void setDoctorId(String doctorId) {
         if (HelperUtils.isValidString(doctorId))
             this.doctorId = doctorId;

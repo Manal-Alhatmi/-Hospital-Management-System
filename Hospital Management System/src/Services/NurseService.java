@@ -2,7 +2,10 @@ package Services;
 
 import Entities.Nurse;
 import Entities.Patient;
+import Utils.HelperUtils;
 import Utils.InputHandler;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -158,5 +161,24 @@ public class NurseService {
             if (n.getNurseId().equalsIgnoreCase(id)) return true;
         }
         return false;
+    }
+
+    public static void addSampleNurses() {
+        for (int i = 0; i < 5; i++) {
+            Nurse nurse = new Nurse();
+            nurse.setId(HelperUtils.generateId("PER"));
+            nurse.setNurseId("NUR00" + (i + 1));
+            nurse.setFirstName("Nurse" + (i + 1));
+            nurse.setLastName("Al Amri");
+            nurse.setGender(i % 2 == 0 ? "Female" : "Male");
+            nurse.setDateOfBirth(LocalDate.of(1990 + i, (i % 12) + 1, (i % 27) + 1));
+            nurse.setPhoneNumber("7944444" + i);
+            nurse.setEmail("nurse" + (i + 1) + "@hospital.com");
+            nurse.setAddress("Salalah, Oman - District " + i);
+            nurse.setShift(i % 3 == 0 ? "Morning" : i % 3 == 1 ? "Evening" : "Night");
+            nurse.setQualification(i % 2 == 0 ? "BSc Nursing" : "Diploma Nursing");
+            nurseList.add(nurse);
+        }
+        System.out.println("=== Sample Nurses Added Successfully ===");
     }
 }
