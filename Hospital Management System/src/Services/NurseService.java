@@ -26,8 +26,7 @@ public class NurseService {
         String departmentId = InputHandler.getStringInput("Enter Department ID: ");
         String shift = InputHandler.getStringInput("Enter Shift (Morning/Evening/Night): ");
         String qualification = InputHandler.getStringInput("Enter Qualification: ");
-
-        String nurseId = "NUR-" + (nurseList.size() + 1);
+        String nurseId =HelperUtils.generateId("NUR");
 
         return new Nurse(id, firstName, lastName, null, gender, phone, email, address,
                 nurseId, departmentId, shift, qualification, new ArrayList<>());

@@ -1,6 +1,7 @@
 package Services;
 
 import Entities.Appointment;
+import Utils.HelperUtils;
 import Utils.InputHandler;
 
 import java.time.LocalDate;
@@ -21,8 +22,7 @@ public class AppointmentService {
         String time = InputHandler.getStringInput("Enter Appointment Time : ");
         String reason = InputHandler.getStringInput("Enter Reason for Visit: ");
         String notes = InputHandler.getStringInput("Enter Notes: ");
-
-        String appointmentId = "APP-" + (appointmentList.size() + 1);
+        String appointmentId = HelperUtils.generateId("APT");
 
         return new Appointment(appointmentId, patientId, doctorId, date, time, "Scheduled", reason, notes);
     }

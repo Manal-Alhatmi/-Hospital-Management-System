@@ -310,7 +310,7 @@ public class PatientService {
             patient.setDateOfBirth(LocalDate.of(1995 + i, (i % 12) + 1, (i % 27) + 1));
             patient.setPhoneNumber("9222222" + i);
             patient.setEmail("outpatient" + i + "@example.com");
-            patient.setAddress("Nizwa, Oman - Street " + i);
+            patient.setAddress("alMusanna000000000, Oman - Street " + i);
             patient.setBloodGroup(i % 2 == 0 ? "A+" : "O+");
             patient.setAllergies(List.of("Pollen"));
             patient.setEmergencyContact("9555000" + i);
