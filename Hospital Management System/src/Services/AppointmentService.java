@@ -43,7 +43,7 @@ public class AppointmentService {
 
 
     public static Appointment createAppointment(String patientId, String doctorId, LocalDate date) {
-        String appointmentId = "APP-" + (appointmentList.size() + 1);
+        String appointmentId = HelperUtils.generateId("APT");
         Appointment app = new Appointment(appointmentId, patientId, doctorId, date, "09:00", "Scheduled", "General Checkup", "");
         appointmentList.add(app);
         System.out.println("Appointment created (basic info).");
@@ -51,7 +51,7 @@ public class AppointmentService {
     }
 
     public static Appointment createAppointment(String patientId, String doctorId, LocalDate date, String time) {
-        String appointmentId = "APP-" + (appointmentList.size() + 1);
+        String appointmentId = HelperUtils.generateId("APT");
         Appointment app = new Appointment(appointmentId, patientId, doctorId, date, time, "Scheduled", "General", "");
         appointmentList.add(app);
         System.out.println("Appointment created with time specified");

@@ -91,9 +91,6 @@ public class ReportService implements Displayable {
     }
 
 
-
-
-
     public static void patientStatistics() {
         System.out.println("\nPatient Statistics");
         System.out.println("Total Patients: " + patients.size());

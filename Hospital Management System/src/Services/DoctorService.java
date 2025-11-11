@@ -31,7 +31,7 @@ public class DoctorService implements Manageable {
     public static void save(Doctor doctor) {
         if (doctor != null) {
             if (doctor.getDoctorId() == null || doctor.getDoctorId().isEmpty()) {
-                doctor.setDoctorId("DOC" + (doctorList.size() + 1));
+                doctor.setDoctorId("DOC");
             }
             doctorList.add(doctor);
             System.out.println("Doctor saved successfully with ID: " + doctor.getDoctorId());
@@ -45,22 +45,6 @@ public class DoctorService implements Manageable {
         Doctor newDoctor = addInput();
         save(newDoctor);
     }
-
-
-    public static void addDoctor(String firstName, String lastName, String specialization) {
-        Doctor doctor = new Doctor("DOC" + (doctorList.size() + 1),
-                firstName, lastName, "DOC" + (doctorList.size() + 1),
-                specialization, "N/A", 0, null, 0.0, new ArrayList<>(), new ArrayList<>());
-        save(doctor);
-        System.out.println("Doctor added (basic details only).");
-    }
-
-
-    public static void addDoctor(Doctor doctor) {
-        save(doctor);
-        System.out.println("Doctor added from object.");
-    }
-
 
     public static void searchDoctor(String specialization) {
         boolean found = false;
@@ -243,7 +227,7 @@ public class DoctorService implements Manageable {
             doctor.setId(HelperUtils.generateId("PER"));
             doctor.setDoctorId("DOC00" + (i + 1));
             doctor.setFirstName("Surgeon" + (i + 1));
-            doctor.setLastName("Al Saadi");
+            doctor.setLastName("Ali");
             doctor.setGender(i % 2 == 0 ? "Male" : "Female");
             doctor.setDateOfBirth(LocalDate.of(1975 + i, (i % 12) + 1, (i % 27) + 1));
             doctor.setPhoneNumber("7911111" + i);
@@ -287,7 +271,7 @@ public class DoctorService implements Manageable {
             doctor.setId(HelperUtils.generateId("PER"));
             doctor.setDoctorId("DOC00" + (i + 7));
             doctor.setFirstName("GP" + (i + 1));
-            doctor.setLastName("Al Rashdi");
+            doctor.setLastName("Al Rawahi");
             doctor.setGender(i % 2 == 0 ? "Male" : "Female");
             doctor.setDateOfBirth(LocalDate.of(1985 + i, (i % 12) + 1, (i % 27) + 1));
             doctor.setPhoneNumber("7933333" + i);

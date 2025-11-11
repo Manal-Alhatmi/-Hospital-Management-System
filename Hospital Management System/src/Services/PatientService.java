@@ -42,20 +42,6 @@ public class PatientService {
     }
 
 
-
-    public static void addPatient(String firstName, String lastName, String phone) {
-        String patientId = HelperUtils.generateId("PAT");
-        Patient newPatient = new Patient(
-                HelperUtils.generateId("PER"),
-                firstName, lastName, LocalDate.now(), "N/A", phone,
-                "N/A", "N/A", patientId, "N/A",
-                new ArrayList<>(), "N/A", LocalDate.now(), "N/A",
-                new ArrayList<>(), new ArrayList<>()
-        );
-        patientList.add(newPatient);
-        System.out.println("Patient added with minimal info (ID: " + patientId + ")");
-    }
-
     public static void addPatient(String firstName, String lastName, String phone, String bloodGroup, String email) {
         String patientId = HelperUtils.generateId("PAT");
         Patient newPatient = new Patient(
@@ -310,7 +296,7 @@ public class PatientService {
             patient.setDateOfBirth(LocalDate.of(1995 + i, (i % 12) + 1, (i % 27) + 1));
             patient.setPhoneNumber("9222222" + i);
             patient.setEmail("outpatient" + i + "@example.com");
-            patient.setAddress("alMusanna000000000, Oman - Street " + i);
+            patient.setAddress("alMusanna, Oman - Street " + i);
             patient.setBloodGroup(i % 2 == 0 ? "A+" : "O+");
             patient.setAllergies(List.of("Pollen"));
             patient.setEmergencyContact("9555000" + i);
@@ -327,7 +313,7 @@ public class PatientService {
             patient.setId("PER-EMP" + (i + 1));
             patient.setPatientId("EMP00" + (i + 1));
             patient.setFirstName("EmergencyPatient" + i);
-            patient.setLastName("Al Maskari");
+            patient.setLastName("Al Amri");
             patient.setGender(i % 2 == 0 ? "Male" : "Female");
             patient.setDateOfBirth(LocalDate.of(1992 + i, (i % 12) + 1, (i % 27) + 1));
             patient.setPhoneNumber("9333333" + i);

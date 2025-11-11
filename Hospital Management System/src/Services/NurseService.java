@@ -157,7 +157,8 @@ public class NurseService {
 
     public static boolean checkIfNurseExists(String id) {
         for (Nurse n : nurseList) {
-            if (n.getNurseId().equalsIgnoreCase(id)) return true;
+            if (n.getNurseId().equalsIgnoreCase(id))
+                return true;
         }
         return false;
     }
