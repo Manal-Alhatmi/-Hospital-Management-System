@@ -1,6 +1,7 @@
 package Services;
 
 import Entities.Appointment;
+import Entities.Patient;
 import Utils.HelperUtils;
 import Utils.InputHandler;
 
@@ -253,20 +254,26 @@ public class AppointmentService {
         }
         return null;
     }
+
     public static void addSampleAppointments() {
         for (int i = 0; i < 15; i++) {
             Appointment app = new Appointment();
-            app.setAppointmentId("APP00" + (i + 1));
-            app.setPatientId(i < 3 ? "PAT00" + (i + 1) : i < 6 ? "INP00" + (i - 2) : i < 8 ? "OUT00" + (i - 5) : "EMP00" + (i - 7));
-            app.setDoctorId("DOC00" + ((i % 8) + 1));
+            app.setAppointmentId(HelperUtils.generateId("APT"));
+            Patient patient = PatientService.patientList.get(i % PatientService.patientList.size());
+            app.setPatientId(patient.getPatientId());
+            app.setDoctorId(DoctorService.doctorList.get(i % DoctorService.doctorList.size()).getDoctorId());
             app.setAppointmentDate(LocalDate.now().plusDays(i));
             app.setAppointmentTime(i % 2 == 0 ? "09:00" : "14:00");
             app.setStatus(i % 3 == 0 ? "Scheduled" : i % 3 == 1 ? "Completed" : "Cancelled");
             app.setReason("Appointment Reason " + (i + 1));
             app.setNotes("Notes for appointment " + (i + 1));
             appointmentList.add(app);
+
+            if (patient.getAppointments() == null) {
+                patient.setAppointments(new ArrayList<>());
+            }
+            patient.getAppointments().add(app);
         }
         System.out.println("=== Sample Appointments Added Successfully ===");
     }
-
 }

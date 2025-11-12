@@ -71,6 +71,10 @@ public class Nurse extends Person {
         return assignedPatients;
     }
 
+    public void setAssignedPatients(List<String> assignedPatients) {
+        this.assignedPatients = assignedPatients;
+    }
+
     public void assignPatient(String patientId) {
         if (HelperUtils.isValidString(patientId) && !assignedPatients.contains(patientId)) {
             assignedPatients.add(patientId);

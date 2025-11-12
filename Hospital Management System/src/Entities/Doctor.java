@@ -13,26 +13,30 @@ public class Doctor extends Person {
     private int experienceYears;
     private String departmentId;
     private double consultationFee;
-    private List<String> availableSlots;
-    private List<String> assignedPatients;
+    private List<String> availableSlots = new ArrayList<>();
+    private List<String> assignedPatients = new ArrayList<>();
 
-    public Doctor(String id, String firstName, String lastName, LocalDate dob,
-                  String gender, String phoneNumber, String email, String address,
-                  String doctorId, String specialization, String qualification,
-                  int experienceYears, String departmentId, double consultationFee,
-                  List<String> availableSlots, List<String> assignedPatients) {
+    public Doctor(String id, String firstName, String lastName, LocalDate dateOfBirth, String gender, String phoneNumber, String email, String address, String doctorId, String specialization, String qualification, int experienceYears, String departmentId, double consultationFee, List<String> availableSlots, List<String> assignedPatients) {
+        super(id, firstName, lastName, dateOfBirth, gender, phoneNumber, email, address);
+        this.doctorId = doctorId;
+        this.specialization = specialization;
+        this.qualification = qualification;
+        this.experienceYears = experienceYears;
+        this.departmentId = departmentId;
+        this.consultationFee = consultationFee;
+        this.availableSlots = availableSlots;
+        this.assignedPatients = assignedPatients;
+    }
 
-        super(id, firstName, lastName, dob, gender, phoneNumber, email, address);
-        this.doctorId = HelperUtils.isValidString(doctorId) ? doctorId : HelperUtils.generateId("DOC");
-
-        setSpecialization(specialization);
-        setQualification(qualification);
-        setExperienceYears(experienceYears);
-        setDepartmentId(departmentId);
-        setConsultationFee(consultationFee);
-
-        this.availableSlots = HelperUtils.isNotNull(availableSlots) ? availableSlots : new ArrayList<>();
-        this.assignedPatients = HelperUtils.isNotNull(assignedPatients) ? assignedPatients : new ArrayList<>();
+    public Doctor(String doctorId, String specialization, String qualification, int experienceYears, String departmentId, double consultationFee, List<String> availableSlots, List<String> assignedPatients) {
+        this.doctorId = doctorId;
+        this.specialization = specialization;
+        this.qualification = qualification;
+        this.experienceYears = experienceYears;
+        this.departmentId = departmentId;
+        this.consultationFee = consultationFee;
+        this.availableSlots = availableSlots;
+        this.assignedPatients = assignedPatients;
     }
 
     public Doctor(String id, String firstName, String lastName, LocalDate dob, String gender, String phone, String email, String address, String doc, String specialization, String qualification, int experienceYears, String departmentId, double consultationFee) {
@@ -103,8 +107,15 @@ public class Doctor extends Person {
         return availableSlots;
     }
 
+    public void setAvailableSlots(List<String> availableSlots) {
+        this.availableSlots = availableSlots;
+    }
+
     public List<String> getAssignedPatients() {
         return assignedPatients;
+    }
+    public void setAssignedPatients(List<String> assignedPatients) {
+        this.assignedPatients = assignedPatients;
     }
 
     public void assignPatient(String patientId) {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientService {
-    static final List<Patient> patientList = new ArrayList<>();
+    public static final List<Patient> patientList = new ArrayList<>();
 
     public static void addPatient() {
         System.out.println("\nRegister New Patient");
@@ -242,8 +242,8 @@ public class PatientService {
         // Regular Patients (3)
         for (int i = 0; i < 3; i++) {
             Patient patient = new Patient();
-            patient.setId("PER-PAT" + (i + 1));
-            patient.setPatientId("PAT00" + (i + 1));
+            patient.setId(HelperUtils.generateId("PER-PAT"));
+            patient.setPatientId(HelperUtils.generateId("PAT00"));
             patient.setFirstName("Regular" + i);
             patient.setLastName("Al Mahrouqi");
             patient.setGender(i % 2 == 0 ? "Male" : "Female");
@@ -262,8 +262,8 @@ public class PatientService {
         // InPatients (3)
         for (int i = 0; i < 3; i++) {
             InPatient patient = new InPatient();
-            patient.setId("PER-INP" + (i + 1));
-            patient.setPatientId("INP00" + (i + 1));
+            patient.setId(HelperUtils.generateId("PER-INP"));
+            patient.setPatientId(HelperUtils.generateId("INP00"));
             patient.setFirstName("InPatient" + i);
             patient.setLastName("Al Hinai");
             patient.setGender(i % 2 == 0 ? "Male" : "Female");
@@ -288,8 +288,8 @@ public class PatientService {
         // OutPatients (2)
         for (int i = 0; i < 2; i++) {
             OutPatient patient = new OutPatient();
-            patient.setId("PER-OUT" + (i + 1));
-            patient.setPatientId("OUT00" + (i + 1));
+            patient.setId(HelperUtils.generateId("PER-OUT"));
+            patient.setPatientId(HelperUtils.generateId("OUT00"));
             patient.setFirstName("OutPatient" + i);
             patient.setLastName("Al Balushi");
             patient.setGender(i % 2 == 0 ? "Female" : "Male");
@@ -310,8 +310,8 @@ public class PatientService {
         // Emergency Patients (2)
         for (int i = 0; i < 2; i++) {
             EmergencyPatient patient = new EmergencyPatient();
-            patient.setId("PER-EMP" + (i + 1));
-            patient.setPatientId("EMP00" + (i + 1));
+            patient.setId(HelperUtils.generateId("PER-EMG"));
+            patient.setPatientId(HelperUtils.generateId("EMG00"));
             patient.setFirstName("EmergencyPatient" + i);
             patient.setLastName("Al Amri");
             patient.setGender(i % 2 == 0 ? "Male" : "Female");

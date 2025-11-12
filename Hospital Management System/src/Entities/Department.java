@@ -9,22 +9,19 @@ public class Department {
     private String departmentId;
     private String departmentName;
     private String headDoctorId;
-    private List<String> doctors;
-    private List<String> nurses;
+    private List<String> doctors = new ArrayList<>();
+    private List<String> nurses = new ArrayList<>();
     private int bedCapacity;
     private int availableBeds;
 
-    public Department(String departmentId, String departmentName, String headDoctorId,
-                      List<String> doctors, List<String> nurses, int bedCapacity, int availableBeds) {
-
-        this.departmentId = HelperUtils.isValidString(departmentId) ? departmentId : HelperUtils.generateId("DEP");
-        setDepartmentName(departmentName);
-        setHeadDoctorId(headDoctorId);
-        setBedCapacity(bedCapacity);
-        setAvailableBeds(availableBeds);
-
-        this.doctors = HelperUtils.isNotNull(doctors) ? doctors : new ArrayList<>();
-        this.nurses = HelperUtils.isNotNull(nurses) ? nurses : new ArrayList<>();
+    public Department(String departmentId, String departmentName, String headDoctorId, List<String> doctors, List<String> nurses, int bedCapacity, int availableBeds) {
+        this.departmentId = departmentId;
+        this.departmentName = departmentName;
+        this.headDoctorId = headDoctorId;
+        this.doctors = doctors;
+        this.nurses = nurses;
+        this.bedCapacity = bedCapacity;
+        this.availableBeds = availableBeds;
     }
 
     public Department(String deptId, String deptName, String headDoctorId, int bedCapacity) {

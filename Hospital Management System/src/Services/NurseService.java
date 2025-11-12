@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class NurseService {
-    static List<Nurse> nurseList = new ArrayList<>();
+    public static List<Nurse> nurseList = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
 
@@ -167,7 +167,7 @@ public class NurseService {
         for (int i = 0; i < 5; i++) {
             Nurse nurse = new Nurse();
             nurse.setId(HelperUtils.generateId("PER"));
-            nurse.setNurseId("NUR00" + (i + 1));
+            nurse.setNurseId(HelperUtils.generateId("NUR"));
             nurse.setFirstName("Nurse" + (i + 1));
             nurse.setLastName("Al Amri");
             nurse.setGender(i % 2 == 0 ? "Female" : "Male");
@@ -177,6 +177,7 @@ public class NurseService {
             nurse.setAddress("Salalah, Oman - District " + i);
             nurse.setShift(i % 3 == 0 ? "Morning" : i % 3 == 1 ? "Evening" : "Night");
             nurse.setQualification(i % 2 == 0 ? "BSc Nursing" : "Diploma Nursing");
+            nurse.setAssignedPatients(new ArrayList<>());
             nurseList.add(nurse);
         }
         System.out.println("=== Sample Nurses Added Successfully ===");

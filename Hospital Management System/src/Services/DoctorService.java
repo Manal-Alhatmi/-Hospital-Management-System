@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DoctorService implements Manageable {
-    static ArrayList<Doctor> doctorList = new ArrayList<>();
+    public static ArrayList<Doctor> doctorList = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
 
@@ -225,7 +225,7 @@ public class DoctorService implements Manageable {
         for (int i = 0; i < 3; i++) {
             Surgeon doctor = new Surgeon();
             doctor.setId(HelperUtils.generateId("PER"));
-            doctor.setDoctorId("DOC00" + (i + 1));
+            doctor.setDoctorId(HelperUtils.generateId("DS"));
             doctor.setFirstName("Surgeon" + (i + 1));
             doctor.setLastName("Ali");
             doctor.setGender(i % 2 == 0 ? "Male" : "Female");
@@ -236,9 +236,9 @@ public class DoctorService implements Manageable {
             doctor.setSpecialization(i == 0 ? "Cardiac Surgery" : i == 1 ? "Neuro Surgery" : "General Surgery");
             doctor.setQualification("MD");
             doctor.setExperienceYears(10 + i);
-            doctor.setDepartmentId("DEPT" + (i + 1));
             doctor.setConsultationFee(150.0 + (i * 25));
             doctor.setSurgeriesPerformed(100 + (i * 50));
+            doctor.setAvailableSlots(List.of("09:00 AM - 10:00 AM", "02:00 PM - 03:00 PM", "04:00 PM - 05:00 PM"));
             doctor.setOperationTheatreAccess(true);
             doctorList.add(doctor);
         }
@@ -247,7 +247,7 @@ public class DoctorService implements Manageable {
         for (int i = 0; i < 3; i++) {
             Consultant doctor = new Consultant();
             doctor.setId(HelperUtils.generateId("PER"));
-            doctor.setDoctorId("DOC00" + (i + 4));
+            doctor.setDoctorId(HelperUtils.generateId("DC"));
             doctor.setFirstName("Consultant" + (i + 1));
             doctor.setLastName("Al Hinai");
             doctor.setGender(i % 2 == 0 ? "Female" : "Male");
@@ -258,9 +258,9 @@ public class DoctorService implements Manageable {
             doctor.setSpecialization(i == 0 ? "Cardiology" : i == 1 ? "Neurology" : "Emergency Medicine");
             doctor.setQualification("PhD");
             doctor.setExperienceYears(8 + i);
-            doctor.setDepartmentId("DEPT" + (i + 1));
             doctor.setConsultationFee(120.0 + (i * 20));
             doctor.setOnlineConsultationAvailable(i % 2 == 0);
+            doctor.setAvailableSlots(List.of("10:00 AM - 11:00 AM", "01:00 PM - 02:00 PM", "03:00 PM - 04:00 PM"));
             doctor.setConsultationDuration(45);
             doctorList.add(doctor);
         }
@@ -269,7 +269,7 @@ public class DoctorService implements Manageable {
         for (int i = 0; i < 2; i++) {
             GeneralPractitioner doctor = new GeneralPractitioner();
             doctor.setId(HelperUtils.generateId("PER"));
-            doctor.setDoctorId("DOC00" + (i + 7));
+            doctor.setDoctorId(HelperUtils.generateId("DG"));
             doctor.setFirstName("GP" + (i + 1));
             doctor.setLastName("Al Rawahi");
             doctor.setGender(i % 2 == 0 ? "Male" : "Female");
@@ -283,6 +283,7 @@ public class DoctorService implements Manageable {
             doctor.setConsultationFee(80.0 + (i * 10));
             doctor.setWalkinAvailable(true);
             doctor.setHomeVisitAvailable(i % 2 == 0);
+            doctor.setAvailableSlots(List.of("08:00 AM - 09:00 AM", "12:00 PM - 01:00 PM", "05:00 PM - 06:00 PM"));
             doctor.setVaccinationCertified(true);
             doctorList.add(doctor);
         }

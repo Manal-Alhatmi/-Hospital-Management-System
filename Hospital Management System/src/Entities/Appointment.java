@@ -30,7 +30,6 @@ public class Appointment {
     }
 
     public Appointment() {
-
     }
 
 
@@ -170,5 +169,19 @@ public class Appointment {
             this.notes = (HelperUtils.isNull(this.notes) ? "" : this.notes + "\n") + entry;
             System.out.println("Notes added by " + addedBy + " at " + timestamp);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "appointmentId='" + appointmentId + '\'' +
+                ", patientId='" + patientId + '\'' +
+                ", doctorId='" + doctorId + '\'' +
+                ", appointmentDate=" + appointmentDate +
+                ", appointmentTime='" + appointmentTime + '\'' +
+                ", status='" + status + '\'' +
+                ", reason='" + reason + '\'' +
+                ", notes='" + notes + '\'' +
+                '}';
     }
 }

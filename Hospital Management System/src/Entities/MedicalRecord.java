@@ -63,9 +63,7 @@ public class MedicalRecord {
     }
 
     public void setDoctorId(String doctorId) {
-        this.doctorId = HelperUtils.isValidString(doctorId)
-                ? doctorId
-                : HelperUtils.generateId("DOC");
+        this.doctorId = HelperUtils.isValidString(doctorId) ? doctorId : HelperUtils.generateId("DOC");
     }
 
     public LocalDate getVisitDate() {
@@ -124,5 +122,19 @@ public class MedicalRecord {
         System.out.println("Prescription: " + prescription);
         System.out.println("Test Results: " + testResults);
         System.out.println("Notes: " + notes);
+    }
+
+    @Override
+    public String toString() {
+        return "MedicalRecord{" +
+                "recordId='" + recordId + '\'' +
+                ", patientId='" + patientId + '\'' +
+                ", doctorId='" + doctorId + '\'' +
+                ", visitDate=" + visitDate +
+                ", diagnosis='" + diagnosis + '\'' +
+                ", prescription='" + prescription + '\'' +
+                ", testResults='" + testResults + '\'' +
+                ", notes='" + notes + '\'' +
+                '}';
     }
 }

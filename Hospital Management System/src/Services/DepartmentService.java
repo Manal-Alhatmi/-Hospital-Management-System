@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DepartmentService implements Manageable {
-    static ArrayList<Department> departmentList = new ArrayList<>();
+    public static ArrayList<Department> departmentList = new ArrayList<>();
 
     public static Department addInput() {
         System.out.println("Add New Department");
@@ -170,10 +170,16 @@ public class DepartmentService implements Manageable {
     public static void addSampleDepartments() {
         for (int i = 0; i < 3; i++) {
             Department dept = new Department();
-            dept.setDepartmentId("DEPT" + (i + 1));
+            dept.setDepartmentId(HelperUtils.generateId("DEP"));
             dept.setDepartmentName(i == 0 ? "Cardiology" : i == 1 ? "Neurology" : "Emergency");
-            dept.setHeadDoctorId("DOC00" + (i + 1));
-            dept.setBedCapacity(i == 0 ? 25 : i == 1 ? 20 : 30);
+            if (!DoctorService.doctorList.isEmpty()) {
+                dept.setHeadDoctorId(DoctorService.doctorList.get(i % DoctorService.doctorList.size()).getDoctorId());
+            } else {
+                dept.setHeadDoctorId("HEAD" + (i + 1));
+            }
+            departmentList.add(dept);
+
+        dept.setBedCapacity(i == 0 ? 25 : i == 1 ? 20 : 30);
             dept.setAvailableBeds(i == 0 ? 18 : i == 1 ? 15 : 10);
             departmentList.add(dept);
         }

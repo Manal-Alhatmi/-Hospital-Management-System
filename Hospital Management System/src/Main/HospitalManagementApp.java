@@ -1,5 +1,6 @@
 package Main;
 
+import Entities.*;
 import Services.*;
 import java.util.Scanner;
 
@@ -338,5 +339,38 @@ public class HospitalManagementApp {
         PatientService.addSamplePatients();
         AppointmentService.addSampleAppointments();
         MedicalRecordService.addSampleMedicalRecords();
+        linkSampleData();
+    }
+
+    public static void linkSampleData() {
+        for (int i = 0; i < DoctorService.doctorList.size(); i++) {
+            Doctor doctor = DoctorService.doctorList.get(i);
+            Department dept = DepartmentService.departmentList.get(i % DepartmentService.departmentList.size());
+            doctor.setDepartmentId(dept.getDepartmentId());
+            dept.getDoctors().add(doctor.getDoctorId());
+        }
+        for (int i = 0; i < NurseService.nurseList.size(); i++) {
+            Nurse nurse = NurseService.nurseList.get(i);
+            Department dept = DepartmentService.departmentList.get(i % DepartmentService.departmentList.size());
+            nurse.setDepartmentId(dept.getDepartmentId());
+            dept.getNurses().add(nurse.getNurseId());
+        }
+        for (int i = 0; i < PatientService.patientList.size(); i++) {
+            Patient patient = PatientService.patientList.get(i);
+            Doctor doctor = DoctorService.doctorList.get(i % DoctorService.doctorList.size());
+            doctor.getAssignedPatients().add(patient.getPatientId());
+
+            Nurse nurse = NurseService.nurseList.get(i % NurseService.nurseList.size());
+            nurse.getAssignedPatients().add(patient.getPatientId());
+
+            if (patient instanceof InPatient inPatient) {
+                inPatient.setAdmittingDoctorId(doctor.getDoctorId());
+            } else if (patient instanceof EmergencyPatient emergencyPatient) {
+                emergencyPatient.setAdmittingDoctorId(doctor.getDoctorId());
+            } else if (patient instanceof OutPatient outPatient) {
+                outPatient.setPreferredDoctorId(doctor.getDoctorId());
+            }
+        }
+        System.out.println(" linking completed successfully");
     }
 }

@@ -16,25 +16,31 @@ public class Patient extends Person {
     private String emergencyContact;
     private LocalDate registrationDate;
     private String insuranceId;
-    private List<MedicalRecord> medicalRecords;
-    private List<Appointment> appointments;
+    private List<MedicalRecord> medicalRecords = new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
 
-    public Patient(String id, String firstName, String lastName, LocalDate dateOfBirth,
-                   String gender, String phoneNumber, String email, String address,
-                   String patientId, String bloodGroup, List<String> allergies,
-                   String emergencyContact, LocalDate registrationDate, String insuranceId,
-                   List<MedicalRecord> medicalRecords, List<Appointment> appointments) {
+    public Patient(String id, String firstName, String lastName, LocalDate dateOfBirth, String gender, String phoneNumber, String email, String address, String patientId, String bloodGroup, List<String> allergies, String emergencyContact, LocalDate registrationDate, String insuranceId, List<MedicalRecord> medicalRecords, List<Appointment> appointments) {
         super(id, firstName, lastName, dateOfBirth, gender, phoneNumber, email, address);
         this.patientId = patientId;
         this.bloodGroup = bloodGroup;
-        this.allergies = (allergies != null) ? allergies : new ArrayList<>();
+        this.allergies = allergies;
         this.emergencyContact = emergencyContact;
-        this.registrationDate = (registrationDate != null) ? registrationDate : LocalDate.now();
+        this.registrationDate = registrationDate;
         this.insuranceId = insuranceId;
-        this.medicalRecords = (medicalRecords != null) ? medicalRecords : new ArrayList<>();
-        this.appointments = (appointments != null) ? appointments : new ArrayList<>();
+        this.medicalRecords = medicalRecords;
+        this.appointments = appointments;
     }
 
+    public Patient(String patientId, String bloodGroup, List<String> allergies, String emergencyContact, LocalDate registrationDate, String insuranceId, List<MedicalRecord> medicalRecords, List<Appointment> appointments) {
+        this.patientId = patientId;
+        this.bloodGroup = bloodGroup;
+        this.allergies = allergies;
+        this.emergencyContact = emergencyContact;
+        this.registrationDate = registrationDate;
+        this.insuranceId = insuranceId;
+        this.medicalRecords = medicalRecords;
+        this.appointments = appointments;
+    }
 
     public Patient() {
         super();
@@ -129,8 +135,16 @@ public class Patient extends Person {
         return medicalRecords;
     }
 
+    public void setMedicalRecords(List<MedicalRecord> medicalRecords) {
+        this.medicalRecords = medicalRecords;
+    }
+
     public List<Appointment> getAppointments() {
         return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 
     public void addMedicalRecord(MedicalRecord record) {
@@ -158,8 +172,8 @@ public class Patient extends Person {
         System.out.println("Registration Date: " + registrationDate);
         System.out.println("Insurance ID: " + insuranceId);
         System.out.println("Allergies: " + allergies);
-        System.out.println("Medical Records Count: " + medicalRecords.size());
-        System.out.println("Appointments Count: " + appointments.size());
+        System.out.println("Medical Records: " + medicalRecords);
+        System.out.println("Appointments: " + appointments);
     }
 
     @Override
